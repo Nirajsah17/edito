@@ -1,12 +1,16 @@
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
-import Drag from "./components/Drag";
 import { useState } from "react";
+import Store from "./storeDB";
+
 export default function App() {
+  const UserStore = new Store();
+  UserStore.addUser("email",{ id: 1, usename: "niraj", email: "niraj@yml.com" });
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
   }
+
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="flex flex-row w-full h-12">
