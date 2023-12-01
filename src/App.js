@@ -1,16 +1,37 @@
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
 import { useState } from "react";
 import Store from "./storeDB";
 
 export default function App() {
-  const UserStore = new Store();
-  UserStore.addUser("email",{ id: 1, usename: "niraj", email: "niraj@yml.com" });
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
   }
 
+useEffect(() => {
+  const store = new Store();
+
+  // Add a user after waiting for the database to initialize
+  const addUserAsync = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second
+
+    // Create a new user
+    await store.addUser({
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: 'password123',
+    });
+
+    // Retrieve the user by ID
+    // await store.getUserById(13);
+   const ids = await store.getAllUserIds();
+   
+  };
+
+  addUserAsync();
+}, []);
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="flex flex-row w-full h-12">
