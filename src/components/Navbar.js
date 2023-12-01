@@ -1,5 +1,5 @@
 import { useState } from "react"
-import logo from "./logo.svg"
+import logo from "./images/logo.svg"
 export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
   const [isLoggedIn, setLoggeIn] = useState(false);
 
