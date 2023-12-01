@@ -56,7 +56,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-center h-12 w-full border">footer</div>
+      <div className="flex flex-row bg-gray-50 justify-center h-12 w-full border">footer</div>
     </div>
   )
 }
