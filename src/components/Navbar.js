@@ -1,5 +1,7 @@
 import { useState } from "react"
 import logo from "./images/logo.svg"
+import {getRandomColorWithOpacity} from '../lib/color';
+
 export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
   const [isLoggedIn, setLoggeIn] = useState(false);
 
@@ -18,12 +20,12 @@ export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
         </div>
         <div className="pl-4">Edito</div>
       </div>
-      <div className="">Navigation</div>
+      <div className=""></div>
       <div></div>
       <div className="">
         {
           isLoggedIn ?
-            <div class="flex h-10 w-10 mr-2 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400">
+            <div class="flex h-10 w-10 mr-2 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400" style={{backgroundColor: getRandomColorWithOpacity(0.7)}}>
               <div>P</div>
             </div>
             :

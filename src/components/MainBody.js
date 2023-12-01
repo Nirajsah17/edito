@@ -16,10 +16,10 @@ function MainBody() {
         </div>
         <div className="w-full flex flex-1">
           <div className="flex flex-1">
-            <div className="w-6 p-2 border-r border-green-600">
+            <div className="w-6 p-2 border-r">
               1.
             </div>
-            <div className="flex flex-1 border border-red-600" contentEditable="true"></div>
+            <div className="flex flex-1" contentEditable="true"></div>
           </div>
         </div>
       </div>
