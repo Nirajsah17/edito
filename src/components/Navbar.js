@@ -1,14 +1,8 @@
 import { useState } from "react"
 import logo from "./images/logo.svg"
-import {getRandomColorWithOpacity} from '../lib/color';
+import { getRandomColorWithOpacity } from '../lib/color';
 
-export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
-  const [isLoggedIn, setLoggeIn] = useState(false);
-
-  const loginHandler = ()=>{
-    setLoggeIn(!isLoggedIn)
-  }
-
+export default function Navbar({ onToggleLeftSidebar, onSignUpOpen, onLoginOpen, isLoggedIn}) {
   return (
     <div className="flex flex-row w-full bg-gray-50 justify-between border-b items-center transition duration-700 ease-in-out" >
       <div className="flex flex-row" id="left">
@@ -25,7 +19,7 @@ export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
       <div className="">
         {
           isLoggedIn ?
-            <div class="flex h-10 w-10 mr-2 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400" style={{backgroundColor: getRandomColorWithOpacity(0.7)}}>
+            <div className="flex h-10 w-10 mr-2 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400" style={{ backgroundColor: getRandomColorWithOpacity(0.7) }}>
               <div>P</div>
             </div>
             :
@@ -34,7 +28,7 @@ export default function Navbar({ onToggleLeftSidebar, onSignUpOpen }) {
                 <button onClick={onSignUpOpen} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded">SignUp</button>
               </div>
               <div className="pl-2 pr-2">
-                <button onClick={loginHandler} className="text-white bg-blue-500 font-semibold py-1 px-4 border border-blue-500 hover:border-transparent rounded">Login</button>
+                <button className="text-white bg-blue-500 font-semibold py-1 px-4 border border-blue-500 hover:border-transparent rounded">Login</button>
               </div>
             </div>
         }

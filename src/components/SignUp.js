@@ -3,6 +3,7 @@ import {
   useState
 } from "react";
 
+import {getRandomColorWithOpacity} from "../lib/color"
 
 function SignUp({onSignUpOpen, onSubmit}) {
   
@@ -10,7 +11,7 @@ function SignUp({onSignUpOpen, onSubmit}) {
    email: '',
    password: '',
    confirmPassword: '',
-   color: ''
+   color: getRandomColorWithOpacity(0.9)
  });
 
  const handleInputChange = (event) => {
@@ -28,6 +29,7 @@ function SignUp({onSignUpOpen, onSubmit}) {
    event.preventDefault();
    // Do something with formData, like sending it to an API or validating
     onSubmit(formData);
+    onSignUpOpen();
  };
   
   return (
