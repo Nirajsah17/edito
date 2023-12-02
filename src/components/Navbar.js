@@ -18,7 +18,7 @@ export default function Navbar({onToggleLeftSidebar,onSignUpOpen}) {
           <button onClick={onSignUpOpen} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded">SignUp</button>
         </div>
         <div className="pl-2 pr-2">
-          <button className="text-white bg-transparent bg-blue-500 font-semibold py-1 px-4 border border-blue-500 hover:border-transparent rounded">Login</button>
+          <button className = "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded" > Login </button>
         </div>
       </div>
     </div>

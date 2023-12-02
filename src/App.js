@@ -12,6 +12,10 @@ export default function App() {
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
   }
+ const handleFormSubmit = (formData) => {
+   // Do something with the form data, e.g., send it to an API
+   console.log('Form data received in App:', formData);
+ };
 
 useEffect(() => {
   const store = new Store();
@@ -22,9 +26,10 @@ useEffect(() => {
 
     // Create a new user
     await store.addUser({
-      name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
+      confirmPassword: 'password123',
+      color: ''
     });
 
     // Retrieve the user by ID
@@ -50,9 +55,9 @@ useEffect(() => {
           <div>
             <LeftSideBar isOpen={isLeftSidebarOpen}></LeftSideBar>
           </div>
-          <div className="flex relative">
+          <div className="flex justify-center relative">
             {isSignUpOpen ?
-              <SignUp onSignUpOpen={isSignUp}></SignUp> : ''}
+              <SignUp onSignUpOpen={isSignUp} onSubmit={handleFormSubmit}></SignUp> : ''}
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ class Store {
       console.error('Error initializing the database:', error);
     }
   }
-
+  
   async addUser(user) {
     try {
       if (!this.db) {
