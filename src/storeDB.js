@@ -2,6 +2,29 @@ import {
   openDB
 } from 'idb';
 
+
+const schema = {
+  dbName: 'Edito',
+  version: 1,
+  stores: [
+    {
+      name: 'Users',
+      index: 'email',
+      unique: true
+    },
+    {
+      name: 'Directory',
+      index: 'email',
+      unique: true
+    },
+    {
+      name: 'file',
+      index: 'email',
+      unique: true
+    }
+  ]
+}
+
 class Store {
   constructor() {
     this.dbName = 'EditoDB';
@@ -12,7 +35,7 @@ class Store {
     this.init();
   }
 
-  async init() {
+  async init(dbName, store) {
     try {
       this.db = await openDB(this.dbName, this.version, {
         upgrade: (db) => {
@@ -33,7 +56,7 @@ class Store {
       console.error('Error initializing the database:', error);
     }
   }
-  
+
   async addUser(user) {
     try {
       if (!this.db) {
@@ -97,7 +120,7 @@ class Store {
 
       const transaction = this.db.transaction(this.storeName, 'readwrite');
       const store = transaction.objectStore(this.storeName);
-      
+
       // Check if 'id' property exists and is not null or undefined
       if (updatedUser.id !== null && updatedUser.id !== undefined) {
         // Use 'put' to update the user with the specified ID
@@ -128,4 +151,108 @@ class Store {
   }
 }
 
-export default Store;
+
+
+
+class EditoDb {
+  constructor() {
+    this.dbSchema = schema;
+    this.Users = null
+  }
+
+  async init() {
+    const storeName = Object.keys(this.dbSchema);
+    try {
+      this.db = await openDB(this.dbSchema.dbName, this.dbSchema.version, {
+        upgrade: (db) => {
+          this.dbSchema.stores.forEach(store => {
+            if (!db.objectStoreNames.contains(store.name)) {
+              const objectStore = db.createObjectStore(store.name, {
+                keyPath: 'id',
+                autoIncrement: true
+              });
+              objectStore.createIndex(store.index, store.index, {
+                unique: store.unique
+              });
+              console.log(`${store.name} is successfully created !!!`)
+            }
+          })
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return this.db
+  }
+
+}
+
+
+class Users {
+  constructor(db, name) {
+    this.db = db;
+    this.name = name;
+  }
+
+  async getUser(user) {
+
+  }
+
+  async deleteUser(email) {
+    try {
+      await this.db.delete(this.name, email);
+      console.log(`${email} is deleted successfully`);
+    } catch (error) {
+      console.log("Error while deleting user : ", email);
+    }
+  }
+
+  async updateUser(updatedUser) {
+    // TODO: fix me
+    await this.db.get(this.name,)
+    console.log('user updated');
+  }
+
+  async addUser(user) {co
+    try {
+      if (!this.db) {
+        console.log("database is not created");
+        return;
+      }
+      await this.db.add(this.name, user);
+      console.log("User added is inserted successfully");
+    } catch (error) {
+      console.log("Error while adding user : ", error);
+    }
+  }
+
+}
+
+class Directory {
+
+  constructor() {
+  }
+}
+
+
+class File {
+  constructor() {
+
+  }
+}
+
+class MainStore {
+  constructor() {
+    let dbInit = new EditoDb();
+    this.db = dbInit.init();
+    this.UsersStore = new Users(this.db, 'Users');
+    this.DirectoryStore = new Directory(this.db, 'Users');
+    this.FileStore = new File(this.db, 'Users');
+  }
+
+
+
+}
+
+// export default Store;
+export default EditoDb;
