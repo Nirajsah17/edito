@@ -20,7 +20,7 @@ export default function App() {
   }
 
   const isLoginOpens = () => {
-    setLoginOpen(!isLoginOpen)
+    setLoginOpen(!isLoginOpen);
   }
 
   const handleFormSubmit = (formData) => {
@@ -33,25 +33,27 @@ export default function App() {
   }
 
   return (
-    <div className="flex flex-col justify-between h-screen w-full">
-      <div className="flex flex-row w-full h-12">
-        <Navbar onToggleLeftSidebar={isOpen} onSignUpOpen={isSignUp} onLoginOpen={isLoginOpens} isLoggedIn={isLoggedIn}></Navbar>
+   <div className="flex flex-col justify-between h-screen w-full">
+     <div className="shadow-md">
+       <Navbar onToggleLeftSidebar={isOpen} onSignUpOpen={isSignUp} onLoginOpen={isLoginOpens} isLoggedIn={isLoggedIn}></Navbar>
       </div>
-      <div className="flex flex-row flex-1">
-        <div className="w-full h-full flex flex-row">
-          <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen}></LeftSideBar>
-          </div>
-          <div className="w-full h-full flex relative">
-            {isSignUpOpen ?
-              <SignUp onSignUpOpen={isSignUp} onSubmit={handleFormSubmit}></SignUp> : ''}
-
-            <MainBody></MainBody>
-            {isLoginOpen ? <Login onLoginOpen={isLoginOpens}></Login> : ''}
-          </div>
+     <div className="flex flex-col justify-between flex-1">
+       <div className="flex flex-row h-full w-full">
+         <div>
+           <LeftSideBar isOpen={isLeftSidebarOpen}></LeftSideBar>
         </div>
-      </div>
-      <div className="flex flex-row bg-gray-50 justify-center h-12 w-full border">footer</div>
-    </div>
+         <div className="relative h-full w-full">
+         {isSignUpOpen ?
+              <div className="absolute z-50">
+              <SignUp onSignUpOpen={isSignUp} onSubmit={handleFormSubmit}></SignUp> </div>: ''}
+          {isLoginOpen ? 
+          <div className = "absolute z-50" >
+          <Login onLoginOpen={isLoginOpens}></Login></div> : ''}
+          <MainBody></MainBody>
+         </div>
+       </div>
+     </div>
+     <div className="flex flex-row bg-gray-50 justify-center h-12 w-full border">footer</div>
+   </div>
   )
 }
