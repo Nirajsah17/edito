@@ -84,10 +84,15 @@ export default function App() {
     setStatus("email or password is invalid !!!")
   }
 
+  const logout = ()=>{
+    localStorage.clear();
+    setLoggedIn(false);
+  }
+
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="shadow-md">
-        <Navbar onToggleLeftSidebar={isOpen} onSignUpOpen={isSignUp} onLoginOpen={isLoginOpens} isLoggedIn={isLoggedIn} userLogo={userLogo}></Navbar>
+        <Navbar onToggleLeftSidebar={isOpen} onSignUpOpen={isSignUp} onLoginOpen={isLoginOpens} isLoggedIn={isLoggedIn} userLogo={userLogo} logout={logout}></Navbar>
       </div>
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
