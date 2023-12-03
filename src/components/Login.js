@@ -1,26 +1,29 @@
 import { useState } from "react";
 
-function Login({ onLoginOpen, isLoggedIn }) {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+function Login({ onLoginOpen, isLoggedIn, onLogin, error }) {
 
-  const onChangeHandler = (event)=>{
-    const {
-      name,
-      value
-    } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const [email, setEmail] = useState("");
+  const [password, setpassword] = useState("");
+
+  const passwordHandler = (e)=>{
+    const password = e.target.value;
+    setpassword(password);
+  }
+
+  const emailHandler = (e)=>{
+    const email = e.target.value;
+    setEmail(email);
   }
 
   const handleSubmit = (event)=>{
     event.preventDefault();
-    console.log("login");
-    console.log(formData);
+    let user = {
+      email: email,
+      password: password
+    };
+    onLogin(user)
+    // console.log("login");
+    // console.log(formData);
     // isLoggedIn(true);
   }
 
@@ -50,7 +53,8 @@ function Login({ onLoginOpen, isLoggedIn }) {
                     id="email"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400"
                     placeholder="name@domain.com"
-                    onChange={onChangeHandler}
+                    value={email}
+                    onChange={emailHandler}
                     required
                   />
                 </div>
@@ -61,13 +65,15 @@ function Login({ onLoginOpen, isLoggedIn }) {
                     id="password"
                     placeholder="••••••••"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400"
-                    onChange={onChangeHandler}
+                    value={password}
+                    onChange={passwordHandler}
                     required />
                 </div>
                 <div className="flex justify-between">
                 </div>
                 <button className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">Don't have account ? <a href="#" className="text-blue-700 hover:underline dark:text-blue-500">SignUp</a></div>
+                <div style={{color:'red'}}>{error}</div>
               </form>
             </div>
           </div>
