@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import EditoDb from "./storeDB"
+import initialData from './data/data.json';
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
 import MainBody from "./components/MainBody"
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import { useState } from "react";
-import EditoDb from "./storeDB"
 
 // const store = new Store();
 const store = new EditoDb();
@@ -23,6 +23,8 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
+  const [data, setData] = useState(initialData);
+  const [selectedFolder, setSelectedFolder] = useState(null);
 
   useEffect(() => {
     const fetchData =  () => {
@@ -44,11 +46,11 @@ export default function App() {
         }
       }
     };
-
+    
     fetchData();
   }, [store.Users]);
 
-
+  
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
   }
@@ -89,6 +91,33 @@ export default function App() {
     setLoggedIn(false);
   }
 
+  const handleFolderCreate = () => {
+    const folderName = prompt('Enter folder name:');
+    if (folderName) {
+      setData((prevData) => [
+        ...prevData,
+        {
+          type: 'folder',
+          name: folderName,
+          children: [],
+        },
+      ]);
+    }
+  };
+
+  const handleFileCreate = () => {
+    const fileName = prompt('Enter file name:');
+    if (fileName) {
+      setData((prevData) => [
+        ...prevData,
+        {
+          type: 'file',
+          name: fileName,
+        },
+      ]);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="shadow-md">
@@ -97,7 +126,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} data={data} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate}></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?
