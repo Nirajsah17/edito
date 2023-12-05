@@ -1,3 +1,4 @@
+import { uuid } from "./lib/utility";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
@@ -7,13 +8,8 @@ import Login from "./components/Login";
 import { useState } from "react";
 import EditoDb from "./storeDB"
 
-// const store = new Store();
 const store = new EditoDb();
 store.init();
-
-// store.Users.addUser();
-// store.Director.get();
-
 
 export default function App() {
 
@@ -30,7 +26,6 @@ export default function App() {
       if (email) {
         try {
           setTimeout(async () => {
-            console.log(store);
             const user =  await store.Users.getUserByEmail(email);
             if (user) {
               setLoggedIn(true);
@@ -48,7 +43,6 @@ export default function App() {
     fetchData();
   }, [store.Users]);
 
-
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
   }
@@ -57,13 +51,36 @@ export default function App() {
     setLoginOpen(!isLoginOpen);
   }
 
-  const handleFormSubmit = (formData) => {
-    store.Users.addUser(formData)
+  const handleFormSubmit = async (formData) => {
+    formData.uuid = uuid();
+    await store.Users.addUser(formData)
+    const root = {
+      uuid: formData.uuid,
+      email: formData.email,
+      root: {
+        name: "Root",
+        type: "folder",
+        children: [
+          {
+            name: 'home',
+            type: 'folder',
+            children: [
+              {
+                name: 'edito.txt',
+                type: 'file',
+                size: '2 MB',
+                created_at: "time"
+              }
+            ]
+          }
+        ]
+      }
+    }
+    await store.Directory.addRoot(root)
   };
 
   const isSignUp = () => {
     setSignUpOpen(!isSignUpOpen);
-    console.log(isSignUpOpen);
   }
 
   const loginUser = async (user) => {

@@ -36,12 +36,11 @@ class EditoDb {
     const storeName = Object.keys(this.dbSchema);
     try {
       this.db = await openDB(this.dbSchema.dbName, this.dbSchema.version, {
-        upgrade: (db) => {
+        upgrade: async (db) => {
           this.dbSchema.stores.forEach(store => {
             if (!db.objectStoreNames.contains(store.name)) {
               const objectStore = db.createObjectStore(store.name, {
-                keyPath: 'id',
-                autoIncrement: true
+                keyPath: 'uuid',
               });
               objectStore.createIndex(store.index, store.index, {
                 unique: store.unique
@@ -52,10 +51,10 @@ class EditoDb {
         }
       });
 
-      this.Users = new Users(this.db, 'Users');
-      this.Directory = new Directory(this.db, 'Directory');
-      this.File = new File(this.db, 'File');
-
+      this.Users =  new Users(this.db, 'Users');
+      console.log(this.db);
+      this.Directory =  new Directory(this.db, 'Directory');
+      this.File =  new File(this.db, 'File');
     } catch (err) {
       console.log(err);
     }
@@ -110,7 +109,7 @@ class Users {
 
   async updateUser(updatedUser) {
     // TODO: fix me
-    await this.db.get(this.name,)
+    await this.db.get(this.name)
     console.log('user updated');
   }
 
@@ -130,8 +129,27 @@ class Users {
 }
 
 class Directory {
+  constructor(db, name) {
+    this.dbm = db | {};
+    this.name = name;
+  }
 
-  constructor() {
+  getFolderById(){
+
+  }
+
+  async addRoot(user) {
+    console.log(this.dbm, this.name);
+    try {
+      if (!this.dbm) {
+        console.log("database is not created");
+        return;
+      }
+      await this.dbm.add(this.name, user);
+      console.log("User Root is created successfully");
+    } catch (error) {
+      console.log("Error while creating user Root : ", error);
+    }
   }
 }
 

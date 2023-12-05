@@ -22,9 +22,6 @@ function Login({ onLoginOpen, isLoggedIn, onLogin, error }) {
       password: password
     };
     onLogin(user)
-    // console.log("login");
-    // console.log(formData);
-    // isLoggedIn(true);
   }
 
   return (
