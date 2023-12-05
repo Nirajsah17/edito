@@ -1,12 +1,12 @@
+import EditoDb from "./storeDB"
+import initialData from './data/data.json';
 import { uuid } from "./lib/utility";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
 import MainBody from "./components/MainBody"
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import { useState } from "react";
-import EditoDb from "./storeDB"
 
 const store = new EditoDb();
 store.init();
@@ -19,14 +19,16 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
+  const [data, setData] = useState(initialData);
+  const [activeFolder, setActiveFolder] = useState('Folder 1');
 
   useEffect(() => {
-    const fetchData =  () => {
+    const fetchData = () => {
       const email = localStorage.getItem('email');
       if (email) {
         try {
           setTimeout(async () => {
-            const user =  await store.Users.getUserByEmail(email);
+            const user = await store.Users.getUserByEmail(email);
             if (user) {
               setLoggedIn(true);
               const firstLetter = email.charAt(0).toUpperCase();
@@ -95,17 +97,84 @@ export default function App() {
         const color = userObj.color;
         setUserLogo({ logo: firstLetter, color: color });
         localStorage.setItem("email", email);
+        const rootFolder = await store.Directory.getUserFolder(email);
+        const fileSystem =  rootFolder.root.children || [];
+        console.log({ fileSystem });
+        setData(fileSystem);
       }
       setStatus("email or password is invalid !!!")
     }
     setStatus("email or password is invalid !!!")
   }
 
-  const logout = ()=>{
+  const logout = () => {
     localStorage.clear();
     setLoggedIn(false);
   }
 
+  const handleFolderCreate = () => {
+    const folderName = prompt('Enter folder name:');
+    if (folderName) {
+      const newFolder = {
+        type: 'folder',
+        name: folderName,
+        children: [],
+      };
+
+      // Try to find the active folder by name in the initial data
+      const foundFolder = findFolderByName(initialData, activeFolder);
+
+      // If found, add the new folder inside it; otherwise, create it at the top level
+      if (foundFolder) {
+        foundFolder.children.push(newFolder);
+        setData([...initialData]); // Ensure to trigger a re-render
+      } else {
+        setData((prevStructure) => [...prevStructure, newFolder]);
+      }
+    }
+  };
+
+  const handleFileCreate = () => {
+    const fileName = prompt('Enter file name:');
+    if (fileName) {
+      const newFile = {
+        type: 'file',
+        name: fileName,
+      };
+
+      // Try to find the active folder by name in the initial data
+      const foundFolder = findFolderByName(initialData, activeFolder);
+
+      // If found, add the new file inside it; otherwise, create it at the top level
+      if (foundFolder) {
+        foundFolder.children.push(newFile);
+        setData([...initialData]); // Ensure to trigger a re-render
+      } else {
+        setData((prevStructure) => [...prevStructure, newFile]);
+      }
+    }
+  };
+
+  // Helper function to find a folder by name in the data
+  const findFolderByName = (data, folderName) => {
+    for (const item of data) {
+      if (item.type === 'folder' && item.name === folderName) {
+        return item;
+      }
+      if (item.children) {
+        const foundChild = findFolderByName(item.children, folderName);
+        if (foundChild) {
+          return foundChild;
+        }
+      }
+    }
+    return null;
+  };
+
+
+  const handleActiveFolder = (name) => {
+    setActiveFolder(name);
+  }
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="shadow-md">
@@ -114,7 +183,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} data={data} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} activeFolder={handleActiveFolder}></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?

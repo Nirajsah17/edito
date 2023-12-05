@@ -130,12 +130,18 @@ class Users {
 
 class Directory {
   constructor(db, name) {
-    this.dbm = db | {};
+    this.dbm = db || {};
     this.name = name;
   }
 
-  getFolderById(){
-
+  async getUserFolder(email){
+    try {
+      const index = this.dbm.transaction(this.name).store.index('email');
+      const userFolder = await index.get(email);
+      return userFolder;
+    } catch (error) {
+      console.error('Error retrieving user by email:', error);
+    }
   }
 
   async addRoot(user) {

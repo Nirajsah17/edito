@@ -1,0 +1,36 @@
+[
+  {
+    "type": "folder",
+    "name": "Folder 1",
+    "children": [
+      {
+        "type": "file",
+        "name": "File 1"
+      },
+      {
+        "type": "file",
+        "name": "File 2"
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "Folder 2",
+    "children": [
+      {
+        "type": "folder",
+        "name": "Subfolder",
+        "children": [
+          {
+            "type": "file",
+            "name": "File 3"
+          },
+          {
+            "type": "file",
+            "name": "File 4"
+          }
+        ]
+      }
+    ]
+  }
+]
