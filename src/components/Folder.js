@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import File from './File';
 
-const Folder = ({ name, children }) => {
+const Folder = ({ name, children, activeFolder }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleFolder = () => {
-    setIsOpen(!isOpen);
+  const sendDataToGrandparent = (e) => {
+   activeFolder(name);
   };
   
+  const toggleFolder = (e) => {
+    setIsOpen(!isOpen);
+    sendDataToGrandparent(e)
+  };
   const folderClassName = isOpen ? 'border border-purple-400' : '';
   return (
     <div>
       <div className={`cursor-pointer ${folderClassName}`} onClick={toggleFolder}>
         {isOpen ? <button className="p-1">
-      <svg width="14px" height="14px" viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+      <svg width="12px" height="12px" viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
         <g id="SVGRepo_iconCarrier">
@@ -21,7 +24,7 @@ const Folder = ({ name, children }) => {
         </g>
       </svg>
     </button> :  <button>
-      <svg width="14px" height="14px" viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" strokeWidth="0.01024">
+      <svg width="12px" height="12px" viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" strokeWidth="0.01024">
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
         <g id="SVGRepo_iconCarrier">
@@ -29,9 +32,9 @@ const Folder = ({ name, children }) => {
         </g>
       </svg>
     </button>}
-        {name}
+       <span className="text-xs"> {name}</span>
       </div>
-      {isOpen && <div className="ml-5">{children}</div>}
+      {isOpen && <div className="ml-5 text-xs">{children}</div>}
     </div>
   );
 };

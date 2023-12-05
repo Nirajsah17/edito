@@ -1,6 +1,6 @@
 const File = ({ name }) => (
   <div>
-    <span>{name}</span>
+    <span className="text-xs">{name}</span>
   </div>
 );
 

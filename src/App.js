@@ -24,7 +24,7 @@ export default function App() {
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
   const [data, setData] = useState(initialData);
-  const [selectedFolder, setSelectedFolder] = useState(null);
+  const [activeFolder, setActiveFolder] = useState('Folder 1');
 
   useEffect(() => {
     const fetchData =  () => {
@@ -49,7 +49,7 @@ export default function App() {
     
     fetchData();
   }, [store.Users]);
-
+  
   
   const isOpen = () => {
     setLeftSidebarOpen(!isLeftSidebarOpen);
@@ -85,39 +85,75 @@ export default function App() {
     }
     setStatus("email or password is invalid !!!")
   }
-
+  
   const logout = ()=>{
     localStorage.clear();
     setLoggedIn(false);
   }
 
-  const handleFolderCreate = () => {
-    const folderName = prompt('Enter folder name:');
-    if (folderName) {
-      setData((prevData) => [
-        ...prevData,
-        {
-          type: 'folder',
-          name: folderName,
-          children: [],
-        },
-      ]);
-    }
-  };
+const handleFolderCreate = () => {
+  const folderName = prompt('Enter folder name:');
+  if (folderName) {
+    const newFolder = {
+      type: 'folder',
+      name: folderName,
+      children: [],
+    };
 
-  const handleFileCreate = () => {
-    const fileName = prompt('Enter file name:');
-    if (fileName) {
-      setData((prevData) => [
-        ...prevData,
-        {
-          type: 'file',
-          name: fileName,
-        },
-      ]);
-    }
-  };
+    // Try to find the active folder by name in the initial data
+    const foundFolder = findFolderByName(initialData, activeFolder);
 
+    // If found, add the new folder inside it; otherwise, create it at the top level
+    if (foundFolder) {
+      foundFolder.children.push(newFolder);
+      setData([...initialData]); // Ensure to trigger a re-render
+    } else {
+      setData((prevStructure) => [...prevStructure, newFolder]);
+    }
+  }
+};
+
+const handleFileCreate = () => {
+  const fileName = prompt('Enter file name:');
+  if (fileName) {
+    const newFile = {
+      type: 'file',
+      name: fileName,
+    };
+
+    // Try to find the active folder by name in the initial data
+    const foundFolder = findFolderByName(initialData, activeFolder);
+
+    // If found, add the new file inside it; otherwise, create it at the top level
+    if (foundFolder) {
+      foundFolder.children.push(newFile);
+      setData([...initialData]); // Ensure to trigger a re-render
+    } else {
+      setData((prevStructure) => [...prevStructure, newFile]);
+    }
+  }
+};
+
+// Helper function to find a folder by name in the data
+const findFolderByName = (data, folderName) => {
+  for (const item of data) {
+    if (item.type === 'folder' && item.name === folderName) {
+      return item;
+    }
+    if (item.children) {
+      const foundChild = findFolderByName(item.children, folderName);
+      if (foundChild) {
+        return foundChild;
+      }
+    }
+  }
+  return null;
+};
+  
+  
+  const handleActiveFolder= (name) => {
+    setActiveFolder(name);
+  }
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="shadow-md">
@@ -126,7 +162,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen} data={data} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} data={data} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} activeFolder={handleActiveFolder}></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?

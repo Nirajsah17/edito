@@ -3,11 +3,11 @@ import file from './images/file.svg';
 import Folder from './Folder';
 import File from './File';
 
-export default function LeftSideBar({data, isOpen, onFolderCreate, onFileCreate}) {
+export default function LeftSideBar({data, isOpen, onFolderCreate, onFileCreate, activeFolder}) {
  const renderNode = (node) => {
     if (node.type === 'folder') {
       return (
-        <Folder key={node.name} name={node.name}>
+        <Folder key={node.name} name={node.name} activeFolder={activeFolder}>
           {node.children.map(renderNode)}
         </Folder>
       );
@@ -16,7 +16,6 @@ export default function LeftSideBar({data, isOpen, onFolderCreate, onFileCreate}
     }
     return null;
   };
-  
   return (
     isOpen ?
       <div className="flex flex-col bg-gray-50 w-72 h-full border-r items-center">
