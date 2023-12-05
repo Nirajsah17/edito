@@ -1,12 +1,10 @@
 
 ## 5 Dec 2023
 
-* File and folder creating 
 * sync with db(file and folder);
 * side bar svg(or placeholder for now) icon based on extension of file.
 * How to write code in the editor body(Exploratory)
-* Code editor file tab state saved or unsaved (icon based on file).
-* 
+* Code editor file tab state saved or unsaved (icon based on file). 
 
 
 ## 29-Nov-2023
