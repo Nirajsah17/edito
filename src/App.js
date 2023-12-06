@@ -19,8 +19,8 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
-  const [data, setData] = useState(initialData);
-  const [activeFolder, setActiveFolder] = useState('Folder 1');
+  const [data, setData] = useState([]);
+  const [activeFolder, setActiveFolder] = useState('');
 
   useEffect(() => {
     const fetchData = () => {
@@ -33,6 +33,9 @@ export default function App() {
               setLoggedIn(true);
               const firstLetter = email.charAt(0).toUpperCase();
               setUserLogo({ logo: firstLetter, color: user.color });
+              const rootDir = await store.Directory.getUserFolder(email);
+              const fileSystem = rootDir.root.children;
+              setData(fileSystem);
             }
           }, 1)
 
@@ -99,8 +102,8 @@ export default function App() {
         localStorage.setItem("email", email);
         const rootFolder = await store.Directory.getUserFolder(email);
         const fileSystem =  rootFolder.root.children || [];
-        console.log({ fileSystem });
         setData(fileSystem);
+        setActiveFolder(fileSystem[0].name);
       }
       setStatus("email or password is invalid !!!")
     }
@@ -112,7 +115,7 @@ export default function App() {
     setLoggedIn(false);
   }
 
-  const handleFolderCreate = () => {
+  const handleFolderCreate = async () => {
     const folderName = prompt('Enter folder name:');
     if (folderName) {
       const newFolder = {
@@ -128,13 +131,15 @@ export default function App() {
       if (foundFolder) {
         foundFolder.children.push(newFolder);
         setData([...initialData]); // Ensure to trigger a re-render
+        const email = localStorage.getItem('email');
+        await store.Directory.update(email, [...initialData]);
       } else {
         setData((prevStructure) => [...prevStructure, newFolder]);
       }
     }
   };
 
-  const handleFileCreate = () => {
+  const handleFileCreate = async () => {
     const fileName = prompt('Enter file name:');
     if (fileName) {
       const newFile = {
@@ -149,6 +154,9 @@ export default function App() {
       if (foundFolder) {
         foundFolder.children.push(newFile);
         setData([...initialData]); // Ensure to trigger a re-render
+        console.log([...initialData]);
+       const email = localStorage.getItem('email');
+       await store.Directory.update(email, [...initialData]);
       } else {
         setData((prevStructure) => [...prevStructure, newFile]);
       }

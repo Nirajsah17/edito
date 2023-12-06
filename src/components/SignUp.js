@@ -29,7 +29,6 @@ function SignUp({ onSignUpOpen, onSubmit }) {
       const user = {
         email: email,
         password: password,
-        confirmPassword: confirmPassword,
         color: getRandomColorWithOpacity(0.9)
       }
       onSubmit(user);

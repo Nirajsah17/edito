@@ -1,5 +1,13 @@
 
-## 5 Dec 2023
+## 7 Dec 2023
+
+* replace prompt with input
+* on click of file, should be selected and open in main body
+* side bar svg(or placeholder for now) icon based on extension of file.
+* How to write code in the editor body(Exploratory)
+* Code editor file tab state saved or unsaved (icon based on file). 
+
+## 6 Dec 2023
 
 * sync with db(file and folder);
 * side bar svg(or placeholder for now) icon based on extension of file.

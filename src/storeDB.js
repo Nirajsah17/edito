@@ -6,8 +6,7 @@ import {
 const schema = {
   dbName: 'Edito',
   version: 1,
-  stores: [
-    {
+  stores: [{
       name: 'Users',
       index: 'email',
       unique: true
@@ -51,10 +50,10 @@ class EditoDb {
         }
       });
 
-      this.Users =  new Users(this.db, 'Users');
+      this.Users = new Users(this.db, 'Users');
       console.log(this.db);
-      this.Directory =  new Directory(this.db, 'Directory');
-      this.File =  new File(this.db, 'File');
+      this.Directory = new Directory(this.db, 'Directory');
+      this.File = new File(this.db, 'File');
     } catch (err) {
       console.log(err);
     }
@@ -134,7 +133,7 @@ class Directory {
     this.name = name;
   }
 
-  async getUserFolder(email){
+  async getUserFolder(email) {
     try {
       const index = this.dbm.transaction(this.name).store.index('email');
       const userFolder = await index.get(email);
@@ -156,6 +155,14 @@ class Directory {
     } catch (error) {
       console.log("Error while creating user Root : ", error);
     }
+  }
+
+  async update(email, newFileSystem) {
+    if (!email) return;
+    const fileSystem = await this.getUserFolder(email);
+    fileSystem.root.children = newFileSystem;
+    await this.dbm.put(this.name, fileSystem);
+    console.log(fileSystem);
   }
 }
 
