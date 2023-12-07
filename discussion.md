@@ -1,5 +1,12 @@
 
+## 8 Dec 2023
+
+* Editor scrolling needs to be fixed when scroll and enter 
+* UI needs to be fixed alignemnt of editor 
+* navigation tab needs to be fixed
+
 ## 7 Dec 2023
+
 
 * replace prompt with input
 * on click of file, should be selected and open in main body
