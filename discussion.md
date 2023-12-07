@@ -4,6 +4,7 @@
 * Editor scrolling needs to be fixed when scroll and enter 
 * UI needs to be fixed alignemnt of editor 
 * navigation tab needs to be fixed
+* refs = https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/
 
 ## 7 Dec 2023
 
