@@ -16,7 +16,7 @@ function MainBody({}) {
 
   const handleText = (e) => {
     const newText = e.target.value;
-    // For new line support 
+    // For new line 
     newText.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<");
     setText(newText);
     code.current.scrollTop = editing.current.scrollTop;
