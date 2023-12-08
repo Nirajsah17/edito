@@ -1,7 +1,20 @@
 {
-  "name": "iamge-editor",
+  "name": "edito",
   "version": "0.1.0",
+  "description": "edito code editor",
   "private": true,
+  "author": "Niraj Kumar <nirajnsp5@gmail.com>",
+  "contributors": [
+    "pallawi Kumari"
+  ],
+  "keywords": [],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Nirajsah17/edito.git"
+  },
+  "readmeFilename": "README.md",
+  "homepage": "",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -39,7 +52,7 @@
       "last 1 safari version"
     ]
   },
-  "node": {
-    "version": ">@v18.16.0"
+  "engines": {
+    "node": ">= v12.16.2"
   }
 }
