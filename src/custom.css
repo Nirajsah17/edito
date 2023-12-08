@@ -1,8 +1,8 @@
 #editing,
 #highlighting {
-    margin: 10px;
+    margin: 0;
     padding: 10px;
-    border: 0;
+    border: 1px solid gray;
     width: calc(100% - 32px);
     height: 100%;
 }

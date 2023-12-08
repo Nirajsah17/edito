@@ -7,6 +7,7 @@ import LeftSideBar from "./components/LeftSidebar";
 import MainBody from "./components/MainBody"
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import Footer from "./components/Footer";
 
 const store = new EditoDb();
 store.init();
@@ -204,7 +205,9 @@ export default function App() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row bg-gray-50 justify-center h-12 w-full border">footer</div>
+      <div className="bg-gray-50 h-12 w-full border">
+      <Footer></Footer>
+      </div>
     </div>
   )
 }

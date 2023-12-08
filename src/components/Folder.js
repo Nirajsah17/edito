@@ -11,11 +11,11 @@ const Folder = ({ name, children, activeFolder }) => {
     setIsOpen(!isOpen);
     sendDataToGrandparent(e)
   };
-  const folderClassName = isOpen ? 'border border-purple-400' : '';
+  const folderClassName = isOpen ? 'border border-purple-300' : '';
   return (
     <div>
       <div className={`cursor-pointer ${folderClassName}`} onClick={toggleFolder}>
-        {isOpen ? <button className="p-1">
+        {isOpen ? <button className="p-1 hover:bg-gray-200 cursor-pointer">
       <svg width="12px" height="12px" viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
@@ -34,7 +34,7 @@ const Folder = ({ name, children, activeFolder }) => {
     </button>}
        <span className="text-xs"> {name}</span>
       </div>
-      {isOpen && <div className="ml-5 text-xs">{children}</div>}
+      {isOpen && <div className="ml-4 text-xs">{children}</div>}
     </div>
   );
 };

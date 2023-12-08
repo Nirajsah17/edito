@@ -3,7 +3,7 @@ import 'prismjs/themes/prism.css';
 import Prism from 'prismjs';
 import '../custom.css';
 
-function MainBody() {
+function MainBody({}) {
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
@@ -30,23 +30,17 @@ function MainBody() {
   return (
     <>
       <div className="w-full h-full flex flex-col">
-        <div className="flex flex-1">
-          <div className="flex flex-1">
-            <div className="w-6 p-2 border-r h-full overflow-y-auto">1.</div>
-            <div className="flex flex-1">
-              <textarea id="editing" spellCheck="false" ref={editing}
-                onChange={handleText}
-                value={text}
-                onScroll={syncScroll}
-              ></textarea>
-              <pre id="highlighting" aria-hidden="true">
-                <code className="language-javascript" ref={code}>
-                  {text}
-                </code>
-              </pre>
-            </div>
-          </div>
-        </div>
+        <div className="w-6 p-2 border-r h-full overflow-y-auto">1.</div>
+        <textarea id="editing" spellCheck="false" ref={editing}
+          onChange={handleText}
+          value={text}
+          onScroll={syncScroll}
+        ></textarea>
+        <pre id="highlighting" aria-hidden="true">
+          <code className="language-javascript" ref={code}>
+            {text}
+          </code>
+        </pre>
       </div>
     </>
   );
