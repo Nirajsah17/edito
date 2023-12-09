@@ -1,3 +1,8 @@
+## 9 Dec 2023
+
+* Have to figure it out how we can achieve collaborative text editing 
+* May use webRTC data channel api.
+* demo file is added index.html and index.js
 
 ## 8 Dec 2023
 
