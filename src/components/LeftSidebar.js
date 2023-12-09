@@ -40,7 +40,7 @@ export default function LeftSideBar({ data, isOpen, onFolderCreate, onFileCreate
 
   return (
     isOpen ?
-      <div onClick={handleMenu} className="flex flex-col bg-gray-50 w-72 h-full border-r items-center">
+      <div onClick={handleMenu} className="flex flex-col bg-gray-50 w-60 h-full border-r items-center">
         <div className="flex w-full bg-gray-100 h-9 border-b justify-between items-center">
           <div className="p-2 truncate text-gray-500"><b>Home</b></div>
           <div className="flex">
