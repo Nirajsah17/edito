@@ -1,5 +1,13 @@
 ## 9 Dec 2023
 
+**collaborative work**
+
+  * polling 
+  * connection state management 
+  * UI for sender and receiver
+* replace prompt with input
+* line number in code editor
+* fix scrolling in code editor
 * Have to figure it out how we can achieve collaborative text editing 
 * May use webRTC data channel api.
 * demo file is added index.html and index.js
@@ -9,7 +17,7 @@
 * Editor scrolling needs to be fixed when scroll and enter 
 * UI needs to be fixed alignemnt of editor 
 * navigation tab needs to be fixed
-* refs = https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/
+* [editor](https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/)
 
 ## 7 Dec 2023
 

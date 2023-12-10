@@ -1,75 +1,91 @@
 #editing,
 #highlighting {
-    margin: 0;
-    padding: 10px;
-    border: 1px solid gray;
-    width: calc(100% - 32px);
-    height: 100%;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid gray;
+  width: calc(100% - 32px);
+  height: 100%;
 }
 
 #editing,
 #highlighting,
 #highlighting * {
-    font-size: 15pt;
-    font-family: monospace;
-    line-height: 20pt;
+  font-size: 15pt;
+  font-family: monospace;
+  line-height: 20pt;
 }
-
 
 /* step2 */
 
 #editing,
 #highlighting {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* step3 */
 
 #editing {
-    z-index: 1;
+  z-index: 1;
 }
 
 #highlighting {
-    z-index: 0;
+  z-index: 0;
 }
 
 /* last step */
 
 #editing {
-    color: transparent;
-    background: transparent;
-    caret-color: black;
+  color: transparent;
+  background: transparent;
+  caret-color: black;
 }
 
 /* customization */
 
 pre[class*="language-"] {
-    background-color: white;
+  background-color: white;
 }
 
 .line-numbers {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 .line-highlight {
-    background-color: #d0d0d0;
+  background-color: #d0d0d0;
 }
 
 /* scrolling */
 
 #editing,
 #highlighting {
-    overflow: auto;
-    white-space: nowrap;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 #editing {
-    resize: none;
+  resize: none;
 }
 
 textarea:focus {
-    outline: none;
-    border-color: transparent;
+  outline: none;
+  border-color: transparent;
 }
+
+/* .line-numbers {
+  display: flex !important;
+  flex-direction: column;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.line-numbers div {
+  font-size: 14px;
+  line-height: 1.5;
+  height: 24px;
+} */

@@ -7,13 +7,19 @@ function MainBody({}) {
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
+  const higthlightingRef = useRef(null);
+  // const [lineNumbers, setLineNumbers] = useState([]);
 
-  const syncScroll = () => {
-    code.current.scrollTop = editing.current.scrollTop;
-    code.current.scrollLeft = editing.current.scrollLeft;
-    console.log(editing.current.scrollTop);
+  const syncScroll = (e) => {
+    if(higthlightingRef.current){
+      const element = e.target;
+      console.log(higthlightingRef.current.scrollTop, element.scrollTop);
+      higthlightingRef.current.scrollTop = element.scrollTop;
+      higthlightingRef.current.scrollLeft = element.scrollLeft;
+      // updateLineNumbers();
+    }
   }
-
+  
   const handleText = (e) => {
     const newText = e.target.value;
     // For new line 
@@ -22,7 +28,20 @@ function MainBody({}) {
     code.current.scrollTop = editing.current.scrollTop;
     code.current.scrollLeft = editing.current.scrollLeft;
   };
-
+  
+  // const updateLineNumbers = () => {
+  //   if (editing.current) {
+  //     const lines = editing.current.value.split('\n');
+  //     setLineNumbers(Array.from({
+  //       length: lines.length
+  //     }, (_, index) => index + 1));
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   updateLineNumbers();
+  // }, [editing.current]);
+  
   useEffect(() => {
     Prism.highlightAll();
   }, [text]);
@@ -30,15 +49,20 @@ function MainBody({}) {
   return (
     <>
       <div className="w-full h-full flex flex-col">
-        <div className="w-6 p-2 border-r h-full overflow-y-auto">1.</div>
+        {/* <div className="line-numbers">
+        {lineNumbers.map((lineNumber) => (
+          <div key={lineNumber} className="h-2">{lineNumber}</div>
+        ))}
+      </div> */}
         <textarea id="editing" spellCheck="false" ref={editing}
           onChange={handleText}
           value={text}
+          onInput={syncScroll}
           onScroll={syncScroll}
         ></textarea>
-        <pre id="highlighting" aria-hidden="true">
+        <pre ref={higthlightingRef} id="highlighting" aria-hidden="true">
           <code className="language-javascript" ref={code}>
-            {text}
+           {text}
           </code>
         </pre>
       </div>

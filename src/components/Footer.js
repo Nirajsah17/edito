@@ -33,7 +33,7 @@ function Footer({ }) {
       ws.send(JSON.stringify(offer))
     }
   }, [offerLst])
-
+  
   useEffect(() => {
     if (answerLst.length == 1) {
       const answer = answerLst[0]
@@ -139,7 +139,7 @@ function Footer({ }) {
     }
     localPeer.createOffer().then(o => { localPeer.setLocalDescription(o); }).then(console.log('set successfully'));
   }
-
+  
   return (
     <>
       <div className="flex flex-row justify-between items-center">
