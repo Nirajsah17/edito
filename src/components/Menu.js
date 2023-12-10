@@ -1,28 +1,32 @@
 import { useState } from "react";
 
-function Menu({ position }) {
+function Menu({ position, createFileOrFolder }) {
 
   const handleNewFile = () => {
     console.log("handleNewFile");
+    createFileOrFolder({ action: "create", type: 'file' })
   }
 
   const handleNewFolder = () => {
     console.log("handleNewFolder");
+    createFileOrFolder({ action: "create", type: 'folder' })
   }
 
-  const handleCut = () => {
+  const handleCut = (e) => {
     console.log("handleCut");
   }
 
-  const handleCopy = () => {
+  const handleCopy = (e) => {
     console.log("handleCopy");
+
   }
 
-  const handleRename = () => {
+  const handleRename = (e) => {
     console.log("handleRename");
+    createFileOrFolder({ action: "rename", type: 'folder' })
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
     console.log("handleDelete");
   }
 

@@ -1,4 +1,11 @@
+## 10 Dec 2023
+
+* Tab in the code editing is not working.
+* Tab default behaviour to be prevented , need to handle.
+* Undo and redo is already there in the editor box .
+
 ## 9 Dec 2023
+
 
 **collaborative work**
 

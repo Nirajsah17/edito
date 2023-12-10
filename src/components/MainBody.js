@@ -13,7 +13,6 @@ function MainBody({}) {
   const syncScroll = (e) => {
     if(higthlightingRef.current){
       const element = e.target;
-      console.log(higthlightingRef.current.scrollTop, element.scrollTop);
       higthlightingRef.current.scrollTop = element.scrollTop;
       higthlightingRef.current.scrollLeft = element.scrollLeft;
       // updateLineNumbers();
