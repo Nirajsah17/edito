@@ -3,6 +3,7 @@ import 'prismjs/themes/prism.css';
 import Prism from 'prismjs';
 import '../custom.css';
 
+
 function MainBody({}) {
   const [text, setText] = useState("");
   const code = useRef(null);
@@ -44,7 +45,14 @@ function MainBody({}) {
   useEffect(() => {
     Prism.highlightAll();
   }, [text]);
-
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault(); 
+      document.execCommand('insertText', false, '  '); 
+    }
+  };
+  
   return (
     <>
       <div className="w-full h-full flex flex-col">
@@ -58,6 +66,7 @@ function MainBody({}) {
           value={text}
           onInput={syncScroll}
           onScroll={syncScroll}
+          onKeyDown={handleKeyDown}
         ></textarea>
         <pre ref={higthlightingRef} id="highlighting" aria-hidden="true">
           <code className="language-javascript" ref={code}>

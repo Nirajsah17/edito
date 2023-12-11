@@ -6,7 +6,7 @@ let localPeer = null;
 let remotePeer = null
 let dataChannel = null;
 
-function Footer({ }) {
+function Footer({ sendRequestToConnect }) {
 
   const [remotePeerIn, setRemotePeerIn] = useState('');
   const [offerStatus, setofferStatus] = useState({});
@@ -146,6 +146,7 @@ function Footer({ }) {
         <div>
           <input onChange={inputHandler} value={remotePeerIn} type="text" placeholder="type user id here... " />
           <button onClick={connect}>connect</button>
+          <button onClick={sendRequestToConnect}>send</button>
         </div>
         <div className="flex flex-row">
           {Object.keys(offerStatus).length ?

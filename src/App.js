@@ -8,6 +8,8 @@ import MainBody from "./components/MainBody"
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
+import Sender from "./components/Sender";
+import Receiver from "./components/Receiver";
 
 const store = new EditoDb();
 store.init();
@@ -22,6 +24,16 @@ export default function App() {
   const [userLogo, setUserLogo] = useState({});
   const [data, setData] = useState([]);
   const [activeFolder, setActiveFolder] = useState('');
+  const [isPopupVisible, setPopupVisible] = useState(true);
+
+
+    const showPopup = () => {
+      setPopupVisible(true);
+    };
+
+    const hidePopup = () => {
+      setPopupVisible(false);
+    };
 
   useEffect(() => {
     const fetchData = () => {
@@ -201,6 +213,9 @@ export default function App() {
             {isLoginOpen ?
               <div className="absolute z-50" >
                 <Login onLoginOpen={isLoginOpens} onLogin={loginUser} error={status}></Login></div> : ''}
+              <div className="absolute z-50" >
+                <Sender />
+              </div>
             <MainBody></MainBody>
           </div>
         </div>
