@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 
-const Folder = ({ name, children, activeFolder }) => {
+const Folder = ({ name, children }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const sendDataToGrandparent = (e) => {
-   activeFolder(name);
-  };
   
   const toggleFolder = (e) => {
     setIsOpen(!isOpen);
-    sendDataToGrandparent(e);
   };
 
-  const folderClassName = isOpen ? 'border border-purple-300' : '';
   return (
     <div>
       <div className={`cursor-pointer bg-gray-200`} onClick={toggleFolder} data-folder={name}>

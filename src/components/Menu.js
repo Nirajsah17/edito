@@ -1,7 +1,6 @@
-import { useState } from "react";
+
 
 function Menu({ position, createFileOrFolder }) {
-
   const handleNewFile = () => {
     console.log("handleNewFile");
     createFileOrFolder({ action: "create", type: 'file' })

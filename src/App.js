@@ -22,18 +22,18 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
-  const [data, setData] = useState([]);
+  const [directory, setDirectory] = useState([]);
   const [activeFolder, setActiveFolder] = useState('');
   const [isPopupVisible, setPopupVisible] = useState(true);
 
 
-    const showPopup = () => {
-      setPopupVisible(true);
-    };
+  const showPopup = () => {
+    setPopupVisible(true);
+  };
 
-    const hidePopup = () => {
-      setPopupVisible(false);
-    };
+  const hidePopup = () => {
+    setPopupVisible(false);
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -48,7 +48,7 @@ export default function App() {
               setUserLogo({ logo: firstLetter, color: user.color });
               const rootDir = await store.Directory.getUserFolder(email);
               const fileSystem = rootDir.root.children;
-              setData(fileSystem);
+              setDirectory(fileSystem);
             }
           }, 1)
 
@@ -114,9 +114,9 @@ export default function App() {
         setUserLogo({ logo: firstLetter, color: color });
         localStorage.setItem("email", email);
         const rootFolder = await store.Directory.getUserFolder(email);
-        const fileSystem =  rootFolder.root.children || [];
-        setData(fileSystem);
-        setActiveFolder(fileSystem[0].name);
+        const fileSystem = rootFolder.root.children || [];
+        setDirectory(fileSystem);
+        // setActiveFolder(fileSystem[0].name);
       }
       setStatus("email or password is invalid !!!")
     }
@@ -128,26 +128,26 @@ export default function App() {
     setLoggedIn(false);
   }
 
-  const handleFolderCreate = async () => {
-    const folderName = prompt('Enter folder name:');
+  const handleFolderCreate = async (file, folder) => {
+    console.log(file, folder);
+    const activeFolder = folder.folder;
+    const folderName = file
     if (folderName) {
       const newFolder = {
         type: 'folder',
         name: folderName,
         children: [],
       };
-
       // Try to find the active folder by name in the initial data
-      const foundFolder = findFolderByName(initialData, activeFolder);
-
-      // If found, add the new folder inside it; otherwise, create it at the top level
+      const foundFolder = findFolderByName(directory, activeFolder);
+      //   // If found, add the new folder inside it; otherwise, create it at the top level
       if (foundFolder) {
         foundFolder.children.push(newFolder);
-        setData([...initialData]); // Ensure to trigger a re-render
+        // setDirectory([...initialData]); // Ensure to trigger a re-render
         const email = localStorage.getItem('email');
         await store.Directory.update(email, [...initialData]);
       } else {
-        setData((prevStructure) => [...prevStructure, newFolder]);
+        setDirectory((prevStructure) => [...prevStructure, newFolder]);
       }
     }
   };
@@ -166,12 +166,12 @@ export default function App() {
       // If found, add the new file inside it; otherwise, create it at the top level
       if (foundFolder) {
         foundFolder.children.push(newFile);
-        setData([...initialData]); // Ensure to trigger a re-render
+        setDirectory([...initialData]); // Ensure to trigger a re-render
         console.log([...initialData]);
-       const email = localStorage.getItem('email');
-       await store.Directory.update(email, [...initialData]);
+        const email = localStorage.getItem('email');
+        await store.Directory.update(email, [...initialData]);
       } else {
-        setData((prevStructure) => [...prevStructure, newFile]);
+        setDirectory((prevStructure) => [...prevStructure, newFile]);
       }
     }
   };
@@ -204,7 +204,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen} data={data} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} activeFolder={handleActiveFolder}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} directory={directory} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate}></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?
@@ -213,15 +213,15 @@ export default function App() {
             {isLoginOpen ?
               <div className="absolute z-50" >
                 <Login onLoginOpen={isLoginOpens} onLogin={loginUser} error={status}></Login></div> : ''}
-              <div className="absolute z-50" >
+            {/* <div className="absolute z-50" >
                 <Sender />
-              </div>
+              </div> */}
             <MainBody></MainBody>
           </div>
         </div>
       </div>
       <div className="bg-gray-50 h-12 w-full border">
-      <Footer></Footer>
+        <Footer></Footer>
       </div>
     </div>
   )

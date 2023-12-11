@@ -5,21 +5,25 @@ import File from './File';
 import Menu from './Menu';
 import { useState } from 'react';
 
-export default function LeftSideBar({ data, isOpen, onFolderCreate, onFileCreate, activeFolder }) {
+export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate }) {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isFolderInput, setFolderInput] = useState(false);
   const [activeFileAndFolder, setActiveFileAndFolder] = useState({ folder: 'home', file: null });
 
-  const createFileOrFolder = () => {
-    setFolderInput(true);
+  const createFileOrFolder = (obj) => {
+    const action = obj.action;
+    const type = obj.type;
+    if(action == "create"){
+      setFolderInput(true);
+    }
   }
 
   const renderNode = (node) => {
     if (node.type === 'folder') {
       return (
-        <Folder key={node.name} name={node.name} activeFolder={activeFolder}>
+        <Folder key={node.name} name={node.name}>
           {node.children.map(renderNode)}
         </Folder>
       );
@@ -39,6 +43,7 @@ export default function LeftSideBar({ data, isOpen, onFolderCreate, onFileCreate
       activeFileAndFolder.file = file;
       setActiveFileAndFolder({ ...activeFileAndFolder });
     }
+    console.log(activeFileAndFolder);
   }
 
   const eventHandler = (e) => {
@@ -58,8 +63,16 @@ export default function LeftSideBar({ data, isOpen, onFolderCreate, onFileCreate
   const handleMenu = (e) => {
     setMenuOpen(false);
     if (e.target.tagName == "INPUT") return;
-    console.log("handle menu");
+    // console.log("handle menu");
     // setFolderInput(false);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
+      const input = e.target.value;
+      setFolderInput(false);
+      onFolderCreate(input,activeFileAndFolder);
+    }
   }
 
   return (
@@ -76,13 +89,13 @@ export default function LeftSideBar({ data, isOpen, onFolderCreate, onFileCreate
             </div>
           </div>
         </div>
-        <div onClick={eventHandler} onContextMenu={eventHandler} className="w-full overflow-y-auto">{data.map(renderNode)}
+        <div onClick={eventHandler} onContextMenu={eventHandler} className="w-full overflow-y-auto">{directory.map(renderNode)}
         </div>
         {isMenuOpen ?
           <Menu position={position} createFileOrFolder={createFileOrFolder}></Menu>
           : ''
         }
-        {isFolderInput ? <input className='p-1 ml-8 bg-gray-300 ' type='text' /> : ''}
+        {isFolderInput ? <input onKeyDown={handleKeyDown} className='p-1 ml-8 bg-gray-300 ' type='text' /> : ''}
 
       </div> : ''
   )
