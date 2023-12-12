@@ -5,6 +5,22 @@ function uuid() {
     });
 }
 
+function deleteByName(tree, name) {
+    for (let i = 0; i < tree.length; i++) {
+        const item = tree[i];
+        if (item.name === name) {
+            tree.splice(i, 1);
+            return true;
+        } else if (item.type === "folder" && item.children) {
+            if (deleteByName(item.children, name)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export {
-    uuid
+    uuid,
+    deleteByName
 }

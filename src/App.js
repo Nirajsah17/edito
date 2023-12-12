@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Sender from "./components/Sender";
 import Receiver from "./components/Receiver";
+import {deleteByName} from "./lib/utility";
 
 const store = new EditoDb();
 store.init();
@@ -129,7 +130,6 @@ export default function App() {
   }
 
   const handleFolderCreate = async (file, folder) => {
-    console.log(file, folder);
     const activeFolder = folder.folder;
     const folderName = file
     if (folderName) {
@@ -143,17 +143,19 @@ export default function App() {
       //   // If found, add the new folder inside it; otherwise, create it at the top level
       if (foundFolder) {
         foundFolder.children.push(newFolder);
-        // setDirectory([...initialData]); // Ensure to trigger a re-render
         const email = localStorage.getItem('email');
-        await store.Directory.update(email, [...initialData]);
+        await store.Directory.update(email, [...directory]);
       } else {
         setDirectory((prevStructure) => [...prevStructure, newFolder]);
       }
     }
   };
 
-  const handleFileCreate = async () => {
-    const fileName = prompt('Enter file name:');
+  const handleFileCreate = async (file, folder) => {
+    console.log({ file, folder });
+    // const fileName = prompt('Enter file name:');
+    const fileName = file;
+    const activeFolder = folder.folder;
     if (fileName) {
       const newFile = {
         type: 'file',
@@ -161,15 +163,15 @@ export default function App() {
       };
 
       // Try to find the active folder by name in the initial data
-      const foundFolder = findFolderByName(initialData, activeFolder);
+      const foundFolder = findFolderByName(directory, activeFolder);
 
       // If found, add the new file inside it; otherwise, create it at the top level
       if (foundFolder) {
         foundFolder.children.push(newFile);
-        setDirectory([...initialData]); // Ensure to trigger a re-render
-        console.log([...initialData]);
+        // setDirectory([...initialData]); // Ensure to trigger a re-render
+        // console.log([...initialData]);
         const email = localStorage.getItem('email');
-        await store.Directory.update(email, [...initialData]);
+        await store.Directory.update(email, [...directory]);
       } else {
         setDirectory((prevStructure) => [...prevStructure, newFile]);
       }
@@ -196,6 +198,20 @@ export default function App() {
   const handleActiveFolder = (name) => {
     setActiveFolder(name);
   }
+
+  const handleDelete = (obj) => {
+    console.log(directory);
+    let deleteItem = null;
+    if (obj.folder) {
+      deleteItem = obj.folder;
+    } else {
+      deleteItem = obj.file
+    }
+    if(deleteItem === "home") return alert("Can't delete root directory, plz select valid file or folder");
+    deleteByName(directory, deleteItem);
+    setDirectory(directory);
+  }
+
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div className="shadow-md">
@@ -204,7 +220,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen} directory={directory} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} directory={directory} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} deleted={handleDelete}></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?

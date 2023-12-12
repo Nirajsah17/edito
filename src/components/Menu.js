@@ -27,6 +27,7 @@ function Menu({ position, createFileOrFolder }) {
 
   const handleDelete = (e) => {
     console.log("handleDelete");
+    createFileOrFolder({ action: "delete" })
   }
 
   return (

@@ -5,18 +5,29 @@ import File from './File';
 import Menu from './Menu';
 import { useState } from 'react';
 
-export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate }) {
+export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted }) {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isFolderInput, setFolderInput] = useState(false);
-  const [activeFileAndFolder, setActiveFileAndFolder] = useState({ folder: 'home', file: null });
+  const [isFileInput, setFileInput] = useState(false);
+  const [activeFileAndFolder, setActiveFileAndFolder] = useState({ folder: 'home' });
 
   const createFileOrFolder = (obj) => {
     const action = obj.action;
     const type = obj.type;
-    if(action == "create"){
-      setFolderInput(true);
+    if (action == "create") {
+      switch (type) {
+        case "file":
+          setFileInput(true);
+          break;
+        case "folder":
+          setFolderInput(true);
+          break;
+      }
+    }
+    if (action == "delete") {
+      deleted(activeFileAndFolder)
     }
   }
 
@@ -36,12 +47,10 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
   const handleActive = (tag) => {
     const folderName = tag.getAttribute('data-folder');
     if (folderName) {
-      activeFileAndFolder.folder = folderName;
-      setActiveFileAndFolder({ ...activeFileAndFolder });
+      setActiveFileAndFolder({ folder: folderName});
     } else {
       const file = tag.getAttribute('data-file');
-      activeFileAndFolder.file = file;
-      setActiveFileAndFolder({ ...activeFileAndFolder });
+      setActiveFileAndFolder({ file: file });
     }
     console.log(activeFileAndFolder);
   }
@@ -67,11 +76,20 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
     // setFolderInput(false);
   }
 
-  const handleKeyDown = (e) => {
+  const handleKeyDownFolder = (e) => {
     if (e.key == "Enter") {
       const input = e.target.value;
       setFolderInput(false);
-      onFolderCreate(input,activeFileAndFolder);
+      onFolderCreate(input, activeFileAndFolder);
+    }
+  }
+
+  const handleKeyDownFile = (e) => {
+    if (e.key == "Enter") {
+      const input = e.target.value;
+      console.log({ input });
+      setFileInput(false);
+      onFileCreate(input, activeFileAndFolder)
     }
   }
 
@@ -95,7 +113,8 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
           <Menu position={position} createFileOrFolder={createFileOrFolder}></Menu>
           : ''
         }
-        {isFolderInput ? <input onKeyDown={handleKeyDown} className='p-1 ml-8 bg-gray-300 ' type='text' /> : ''}
+        {isFolderInput ? <input onKeyDown={handleKeyDownFolder} className='p-1 ml-8 bg-gray-300 ' type='text' /> : ''}
+        {isFileInput ? <input onKeyDown={handleKeyDownFile} className='p-1 ml-8 bg-gray-300 ' type='text' /> : ''}
 
       </div> : ''
   )
