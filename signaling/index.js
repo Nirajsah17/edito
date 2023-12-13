@@ -4,6 +4,7 @@ const sdpText = document.querySelector("#sdpText");
 const acceptOffer = document.querySelector("#accept-offer");
 const message = document.querySelector("#message");
 const send = document.querySelector("#send");
+const messageDiv = document.querySelector("#messageDiv");
 
 
 let localPeer = null;
@@ -18,6 +19,10 @@ generateSDP.addEventListener("click", (e) => {
   if (dataChannel) {
     dataChannel.onmessage = e => {
       console.log("just got data : ", e.data);
+      const p = document.createElement("p");
+      p.style.border = "1px solid red";
+      p.innerHTML = e.data;
+      messageDiv.appendChild(p);
     }
     dataChannel.onopen = e => {
       console.log("connection opened !!!");
@@ -44,14 +49,19 @@ acceptOffer.addEventListener("click", (e) => {
       }
       remotePeer.ondatachannel = (e) => {
         remotePeer.dataChannel = e.channel;
-        remotePeer.dataChannel.onmessage = e => console.log("new message from client : ", e.data);
+        remotePeer.dataChannel.onmessage = e => {
+          const p = document.createElement("p");
+          p.style.border = "1px solid green";
+          p.innerHTML = e.data;
+          messageDiv.appendChild(p);
+        }
         remotePeer.dataChannel.onopen = e => console.log("Coonection opened !!!");
         // clear all the 
       }
       remotePeer.setRemoteDescription(offer).then(a => console.log("offer set !!"));
       remotePeer.createAnswer().then(a => remotePeer.setLocalDescription(a)).then(console.log("answer created"));
-    }else{
-      if(localPeer){
+    } else {
+      if (localPeer) {
         localPeer.setRemoteDescription(offer)
       }
     }
@@ -59,13 +69,19 @@ acceptOffer.addEventListener("click", (e) => {
   }
 });
 
-send.addEventListener("click",e=>{
+send.addEventListener("click", e => {
   let messages = message.value;
-  if(dataChannel){
-    dataChannel.send(messages)
+  if (dataChannel) {
+    dataChannel.send(messages);
+    const p = document.createElement("p");
+    p.innerHTML = messages;
+    messageDiv.appendChild(p);
   }
-  if(remotePeer?.dataChannel){
-    remotePeer.dataChannel.send(messages)
+  if (remotePeer?.dataChannel) {
+    remotePeer.dataChannel.send(messages);
+    const p = document.createElement("p");
+    p.innerHTML = messages;
+    messageDiv.appendChild(p);
   }
 })
 
