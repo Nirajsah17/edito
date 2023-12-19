@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Sender from "./components/Sender";
 import Receiver from "./components/Receiver";
-import {deleteByName} from "./lib/utility";
+import { deleteByName } from "./lib/utility";
 
 const store = new EditoDb();
 store.init();
@@ -26,6 +26,7 @@ export default function App() {
   const [directory, setDirectory] = useState([]);
   const [activeFolder, setActiveFolder] = useState('');
   const [isPopupVisible, setPopupVisible] = useState(true);
+  let codes = null;
 
 
   const showPopup = () => {
@@ -207,11 +208,39 @@ export default function App() {
     } else {
       deleteItem = obj.file
     }
-    if(deleteItem === "home") return alert("Can't delete root directory, plz select valid file or folder");
+    if (deleteItem === "home") return alert("Can't delete root directory, plz select valid file or folder");
     deleteByName(directory, deleteItem);
     setDirectory(directory);
   }
 
+  const openFileInCode = (filename) => {
+    console.log("open :: ", filename);
+    if(filename.folder){
+      setActiveFolder(filename.folder)
+    }
+  }
+
+  // const saveHandler = 
+  const saveHandle = async () => {
+    // console.log("save");
+    // console.log();
+    const code = JSON.stringify(codes);
+    const _obj = {
+      email: localStorage.getItem("email"),
+      uuid: uuid(),
+      folder: activeFolder,
+      content: code
+    }
+    console.log(_obj);
+    await store.File.addFile(_obj);
+    
+  }
+
+  const currentCode = (code)=>{
+    // console.log("code :: ",JSON.stringify(code));
+    codes = code;
+    // console.log(codes);
+  }
 
   return (
     <div className="flex flex-col justify-between h-screen w-full">
@@ -221,7 +250,7 @@ export default function App() {
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-row h-full w-full">
           <div>
-            <LeftSideBar isOpen={isLeftSidebarOpen} directory={directory} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} deleted={handleDelete}></LeftSideBar>
+            <LeftSideBar isOpen={isLeftSidebarOpen} directory={directory} onFolderCreate={handleFolderCreate} onFileCreate={handleFileCreate} deleted={handleDelete} openFileInCode={openFileInCode} ></LeftSideBar>
           </div>
           <div className="relative h-full w-full">
             {isSignUpOpen ?
@@ -233,12 +262,12 @@ export default function App() {
             {/* <div className="absolute z-50" >
                 <Sender />
               </div> */}
-            <MainBody></MainBody>
+            <MainBody currentCode={currentCode}></MainBody>
           </div>
         </div>
       </div>
       <div className="bg-gray-50 h-12 w-full border">
-        <Footer></Footer>
+        <Footer saveHandle={saveHandle}></Footer>
       </div>
     </div>
   )

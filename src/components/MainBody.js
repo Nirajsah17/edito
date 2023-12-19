@@ -4,7 +4,7 @@ import Prism from 'prismjs';
 import '../custom.css';
 
 
-function MainBody({}) {
+function MainBody({currentCode}) {
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
@@ -25,6 +25,7 @@ function MainBody({}) {
     // For new line 
     newText.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<");
     setText(newText);
+    currentCode(newText);
     code.current.scrollTop = editing.current.scrollTop;
     code.current.scrollLeft = editing.current.scrollLeft;
   };

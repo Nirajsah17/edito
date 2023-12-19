@@ -7,20 +7,20 @@ const schema = {
   dbName: 'Edito',
   version: 1,
   stores: [{
-      name: 'Users',
-      index: 'email',
-      unique: true
-    },
-    {
-      name: 'Directory',
-      index: 'email',
-      unique: true
-    },
-    {
-      name: 'file',
-      index: 'email',
-      unique: true
-    }
+    name: 'Users',
+    index: 'email',
+    unique: true
+  },
+  {
+    name: 'Directory',
+    index: 'email',
+    unique: true
+  },
+  {
+    name: 'file',
+    index: 'email',
+    unique: true
+  }
   ]
 }
 class EditoDb {
@@ -168,9 +168,24 @@ class Directory {
 
 
 class File {
-  constructor() {
-
+  constructor(db, name) {
+    this.db = db || {};
+    this.name = name;
   }
+
+  async addFile(obj) {
+    try {
+      if (!this.db) {
+        console.log("database is not created");
+        return;
+      }
+      await this.db.add(this.name, obj);
+      console.log("User added is inserted successfully");
+    } catch (error) {
+      console.log("Error while adding user : ", error);
+    }
+  }
+
 }
 
 

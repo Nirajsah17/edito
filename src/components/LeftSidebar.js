@@ -5,7 +5,7 @@ import File from './File';
 import Menu from './Menu';
 import { useState } from 'react';
 
-export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted }) {
+export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted , openFileInCode}) {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
       }
     }
     if (action == "delete") {
-      deleted(activeFileAndFolder)
+      deleted(activeFileAndFolder);
     }
   }
 
@@ -53,6 +53,9 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
       setActiveFileAndFolder({ file: file });
     }
     console.log(activeFileAndFolder);
+    // if(activeFileAndFolder.file){
+      openFileInCode(activeFileAndFolder);
+    // }
   }
 
   const eventHandler = (e) => {

@@ -6,7 +6,7 @@ let localPeer = null;
 let remotePeer = null
 let dataChannel = null;
 
-function Footer({ sendRequestToConnect }) {
+function Footer({ sendRequestToConnect, saveHandle }) {
 
   const [remotePeerIn, setRemotePeerIn] = useState('');
   const [offerStatus, setofferStatus] = useState({});
@@ -139,6 +139,10 @@ function Footer({ sendRequestToConnect }) {
     }
     localPeer.createOffer().then(o => { localPeer.setLocalDescription(o); }).then(console.log('set successfully'));
   }
+
+  const saveHandler = ()=>{
+    saveHandle();
+  }
   
   return (
     <>
@@ -159,7 +163,7 @@ function Footer({ sendRequestToConnect }) {
             : ''}
         </div>
         <div className="pr-8">
-          <button className="w-20 rounded-md bg-purple-500 text-white border border-purple-500 p-1 hover:bg-purple-700 hover:text-white">save</button>
+          <button onClick={saveHandler} className="w-20 rounded-md bg-purple-500 text-white border border-purple-500 p-1 hover:bg-purple-700 hover:text-white">save</button>
         </div>
       </div>
     </>
