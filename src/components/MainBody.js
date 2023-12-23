@@ -4,7 +4,7 @@ import Prism from 'prismjs';
 import '../custom.css';
 
 
-function MainBody({currentCode}) {
+function MainBody({ currentCode, openCode }) {
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
@@ -12,14 +12,17 @@ function MainBody({currentCode}) {
   // const [lineNumbers, setLineNumbers] = useState([]);
 
   const syncScroll = (e) => {
-    if(higthlightingRef.current){
+    if (higthlightingRef.current) {
       const element = e.target;
       higthlightingRef.current.scrollTop = element.scrollTop;
       higthlightingRef.current.scrollLeft = element.scrollLeft;
       // updateLineNumbers();
     }
   }
-  
+
+
+  // setText(openCode)
+
   const handleText = (e) => {
     const newText = e.target.value;
     // For new line 
@@ -29,7 +32,7 @@ function MainBody({currentCode}) {
     code.current.scrollTop = editing.current.scrollTop;
     code.current.scrollLeft = editing.current.scrollLeft;
   };
-  
+
   // const updateLineNumbers = () => {
   //   if (editing.current) {
   //     const lines = editing.current.value.split('\n');
@@ -38,22 +41,22 @@ function MainBody({currentCode}) {
   //     }, (_, index) => index + 1));
   //   }
   // };
-  
+
   // useEffect(() => {
   //   updateLineNumbers();
   // }, [editing.current]);
-  
+
   useEffect(() => {
     Prism.highlightAll();
-  }, [text]);
-  
+  }, [text, openCode]);
+
   const handleKeyDown = (e) => {
     if (e.key === 'Tab') {
-      e.preventDefault(); 
-      document.execCommand('insertText', false, '  '); 
+      e.preventDefault();
+      document.execCommand('insertText', false, '  ');
     }
   };
-  
+
   return (
     <>
       <div className="w-full h-full flex flex-col">
@@ -64,14 +67,15 @@ function MainBody({currentCode}) {
       </div> */}
         <textarea id="editing" spellCheck="false" ref={editing}
           onChange={handleText}
-          value={text}
+          value={openCode ? openCode : text}
           onInput={syncScroll}
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}
         ></textarea>
         <pre ref={higthlightingRef} id="highlighting" aria-hidden="true">
           <code className="language-javascript" ref={code}>
-           {text}
+            {/* {text} */}
+            {openCode ? openCode : text}
           </code>
         </pre>
       </div>

@@ -17,9 +17,9 @@ const schema = {
     unique: true
   },
   {
-    name: 'file',
+    name: 'File',
     index: 'email',
-    unique: true
+    unique: false
   }
   ]
 }
@@ -49,7 +49,6 @@ class EditoDb {
           })
         }
       });
-
       this.Users = new Users(this.db, 'Users');
       console.log(this.db);
       this.Directory = new Directory(this.db, 'Directory');
@@ -180,14 +179,34 @@ class File {
         return;
       }
       await this.db.add(this.name, obj);
-      console.log("User added is inserted successfully");
+      console.log("File saved successfully");
     } catch (error) {
-      console.log("Error while adding user : ", error);
+      console.log("Error while saving file : ", error);
+    }
+  }
+
+  async getFile(uuid){
+    try{
+      const file = await this.db.get(this.name, uuid)
+      return file
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  async updateFile(uuid, content){
+    try{
+      if(!uuid) return;
+      const file = await this.getFile(uuid);
+      file.content = content;
+      await this.db.put(this.name,file);
+      console.log("file updated");
+    }catch(err){
+      console.error("err while  update file :",err);
     }
   }
 
 }
-
 
 // export default Store;
 export default EditoDb;

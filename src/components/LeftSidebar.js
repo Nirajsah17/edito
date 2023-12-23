@@ -5,7 +5,7 @@ import File from './File';
 import Menu from './Menu';
 import { useState } from 'react';
 
-export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted , openFileInCode}) {
+export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted, openFileInCode }) {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -34,12 +34,12 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
   const renderNode = (node) => {
     if (node.type === 'folder') {
       return (
-        <Folder key={node.name} name={node.name}>
+        <Folder key={node.name} name={node.name} uuid={node.uuid}>
           {node.children.map(renderNode)}
         </Folder>
       );
     } else if (node.type === 'file') {
-      return <File key={node.name} name={node.name} />;
+      return <File key={node.name} name={node.name} uuid={node.uuid} />;
     }
     return null;
   };
@@ -47,15 +47,12 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
   const handleActive = (tag) => {
     const folderName = tag.getAttribute('data-folder');
     if (folderName) {
-      setActiveFileAndFolder({ folder: folderName});
+      setActiveFileAndFolder({ folder: folderName });
     } else {
       const file = tag.getAttribute('data-file');
       setActiveFileAndFolder({ file: file });
+      openFileInCode(file);
     }
-    console.log(activeFileAndFolder);
-    // if(activeFileAndFolder.file){
-      openFileInCode(activeFileAndFolder);
-    // }
   }
 
   const eventHandler = (e) => {

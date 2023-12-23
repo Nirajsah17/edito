@@ -14,6 +14,7 @@ import { deleteByName } from "./lib/utility";
 
 const store = new EditoDb();
 store.init();
+window['edito'] = store;
 
 export default function App() {
 
@@ -26,7 +27,9 @@ export default function App() {
   const [directory, setDirectory] = useState([]);
   const [activeFolder, setActiveFolder] = useState('');
   const [isPopupVisible, setPopupVisible] = useState(true);
+  const [openCode, setCode] = useState('');
   let codes = null;
+  let activeFile = null;
 
 
   const showPopup = () => {
@@ -72,7 +75,9 @@ export default function App() {
   }
 
   const handleFormSubmit = async (formData) => {
-    formData.uuid = uuid();
+    const _uuid = uuid()
+    formData.uuid = _uuid;
+    activeFile = _uuid
     await store.Users.addUser(formData)
     const root = {
       uuid: formData.uuid,
@@ -89,14 +94,22 @@ export default function App() {
                 name: 'edito.txt',
                 type: 'file',
                 size: '2 MB',
-                created_at: "time"
+                created_at: "time",
+                uuid: _uuid
               }
             ]
           }
         ]
       }
     }
-    await store.Directory.addRoot(root)
+    await store.Directory.addRoot(root);
+
+    const _obj = {
+      email: localStorage.getItem("email"),
+      uuid: _uuid,
+      content: 'No content'
+    }
+    await store.File.addFile(_obj);
   };
 
   const isSignUp = () => {
@@ -138,6 +151,7 @@ export default function App() {
         type: 'folder',
         name: folderName,
         children: [],
+        uuid: uuid()
       };
       // Try to find the active folder by name in the initial data
       const foundFolder = findFolderByName(directory, activeFolder);
@@ -154,23 +168,18 @@ export default function App() {
 
   const handleFileCreate = async (file, folder) => {
     console.log({ file, folder });
-    // const fileName = prompt('Enter file name:');
     const fileName = file;
     const activeFolder = folder.folder;
     if (fileName) {
       const newFile = {
         type: 'file',
         name: fileName,
+        uuid: uuid(),
+        content: 'No content'
       };
-
-      // Try to find the active folder by name in the initial data
       const foundFolder = findFolderByName(directory, activeFolder);
-
-      // If found, add the new file inside it; otherwise, create it at the top level
       if (foundFolder) {
         foundFolder.children.push(newFile);
-        // setDirectory([...initialData]); // Ensure to trigger a re-render
-        // console.log([...initialData]);
         const email = localStorage.getItem('email');
         await store.Directory.update(email, [...directory]);
       } else {
@@ -208,38 +217,45 @@ export default function App() {
     } else {
       deleteItem = obj.file
     }
-    if (deleteItem === "home") return alert("Can't delete root directory, plz select valid file or folder");
+    if (deleteItem === "home") return alert("Can't delete root directory, please select valid file or folder");
     deleteByName(directory, deleteItem);
     setDirectory(directory);
   }
 
-  const openFileInCode = (filename) => {
-    console.log("open :: ", filename);
-    if(filename.folder){
-      setActiveFolder(filename.folder)
+  const openFileInCode = async (filename) => {
+    if (filename) {
+      activeFile = filename;
+      console.log("open :: ", filename);
+      const file = await store.File.getFile(filename);
+      if (file) {
+        setCode(file.content)
+      }
+      // setActiveFolder();
     }
+    // if(filename.folder){
+    // setActiveFolder(filename.folder)
+    // }
   }
 
-  // const saveHandler = 
   const saveHandle = async () => {
-    // console.log("save");
-    // console.log();
     const code = JSON.stringify(codes);
-    const _obj = {
-      email: localStorage.getItem("email"),
-      uuid: uuid(),
-      folder: activeFolder,
-      content: code
+    console.log(activeFile);
+    const file = await store.File.getFile(activeFile);
+    if (file) {
+      store.File.updateFile(activeFile, code);
+    } else {
+      const _obj = {
+        email: localStorage.getItem("email"),
+        uuid: activeFile,
+        content: code
+      }
+      await store.File.addFile(_obj);
     }
-    console.log(_obj);
-    await store.File.addFile(_obj);
-    
+
   }
 
-  const currentCode = (code)=>{
-    // console.log("code :: ",JSON.stringify(code));
+  const currentCode = (code) => {
     codes = code;
-    // console.log(codes);
   }
 
   return (
@@ -262,7 +278,7 @@ export default function App() {
             {/* <div className="absolute z-50" >
                 <Sender />
               </div> */}
-            <MainBody currentCode={currentCode}></MainBody>
+            <MainBody currentCode={currentCode} openCode={ openCode}></MainBody>
           </div>
         </div>
       </div>
