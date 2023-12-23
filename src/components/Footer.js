@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 let ws = null;
 let uid = null;
 let localPeer = null;
-let remotePeer = null
+let remotePeer = null;
 let dataChannel = null;
 
 function Footer({ sendRequestToConnect, saveHandle }) {
@@ -74,7 +74,7 @@ function Footer({ sendRequestToConnect, saveHandle }) {
 
   useEffect(() => {
     try {
-      ws = new WebSocket("ws://localhost:7000");
+      ws = new WebSocket("wss://animated-space-trout-w4x9g6r9wp39rxv-7000.app.github.dev/ws");
       ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
         console.log("msg", message);
