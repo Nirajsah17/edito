@@ -30,6 +30,7 @@ function Footer({ sendRequestToConnect, saveHandle }) {
   useEffect(() => {
     if (offerLst.length == 1) {
       const offer = offerLst[0]
+      
       ws.send(JSON.stringify(offer))
     }
   }, [offerLst])
