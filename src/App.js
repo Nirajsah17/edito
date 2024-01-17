@@ -3,13 +3,13 @@ import initialData from "./data/data.json";
 import { uuid } from "./lib/utility";
 import { useContext, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import LeftSideBar from "./components/LeftSidebar";
+import LeftSideBar from "./components/LeftSidebar.js";
 import MainBody from "./components/MainBody";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
-import Sender from "./components/Sender";
-import Receiver from "./components/Receiver";
+// import Sender from "./components/Sender";
+// import Receiver from "./components/Receiver";
 import { deleteByName } from "./lib/utility";
 
 import UserContext from "./lib/UserContext";
@@ -31,13 +31,13 @@ export default function App() {
   const [openCode, setCode] = useState("");
   let codes = null;
   let activeFile = null;
-  const {users} = useContext(UserContext);
-  const [user,setUser] = useState(users);
-  
-  const {dir} = useContext(FileContext);
+  const { users } = useContext(UserContext);
+  const [user, setUser] = useState(users);
+
+  const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
-  
-  console.log('app',user);
+
+  console.log("app", user);
   const showPopup = () => {
     setPopupVisible(true);
   };
@@ -84,6 +84,7 @@ export default function App() {
     formData.uuid = _uuid;
     activeFile = _uuid;
     await store.Users.addUser(formData);
+
     const root = {
       uuid: formData.uuid,
       email: formData.email,
@@ -107,6 +108,9 @@ export default function App() {
         ],
       },
     };
+
+
+
     await store.Directory.addRoot(root);
 
     const _obj = {
@@ -137,7 +141,7 @@ export default function App() {
         const fileSystem = rootFolder.root.children || [];
         setDirectory(fileSystem);
         setUser({
-          email: email
+          email: email,
         });
         console.log(user);
         // setActiveFolder(fileSystem[0].name);
@@ -268,69 +272,61 @@ export default function App() {
     codes = code;
   };
 
+  document.addEventListener("onSignUp",(e)=>{
+    
+    console.log("events",e);
+  })
+
   return (
-    <FileContext.Provider value={{dir: directory, setDirectory}}>
-    <UserContext.Provider value={{user: user,setUser: setUser}}>
-      <div className="flex flex-col justify-between h-screen w-full">
-        <div className="shadow-md">
-          <Navbar
-            onToggleLeftSidebar={isOpen}
-            onSignUpOpen={isSignUp}
-            onLoginOpen={isLoginOpens}
-            isLoggedIn={isLoggedIn}
-            userLogo={userLogo}
-            logout={logout}
-          ></Navbar>
-        </div>
-        <div className="flex flex-col justify-between flex-1">
-          <div className="flex flex-row h-full w-full">
-            <div>
-              <LeftSideBar
-                isOpen={isLeftSidebarOpen}
-                directory={directory}
-                onFolderCreate={handleFolderCreate}
-                onFileCreate={handleFileCreate}
-                deleted={handleDelete}
-                openFileInCode={openFileInCode}
-              ></LeftSideBar>
-            </div>
-            <div className="relative h-full w-full">
-              {isSignUpOpen ? (
-                <div className="absolute z-50">
-                  <SignUp
-                    onSignUpOpen={isSignUp}
-                    onSubmit={handleFormSubmit}
-                  ></SignUp>{" "}
-                </div>
-              ) : (
-                ""
-              )}
-              {isLoginOpen ? (
-                <div className="absolute z-50">
-                  <Login
-                    onLoginOpen={isLoginOpens}
-                    onLogin={loginUser}
-                    error={status}
-                  ></Login>
-                </div>
-              ) : (
-                ""
-              )}
-              {/* <div className="absolute z-50" >
+    <FileContext.Provider value={{ dir: directory, setDirectory }}>
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        <div className="flex flex-col justify-between h-screen w-full">
+          <div className="shadow-md">
+            <Navbar
+            ></Navbar>
+          </div>
+          <div className="flex flex-col justify-between flex-1">
+            <div className="flex flex-row h-full w-full">
+              <div>
+                <LeftSideBar
+                ></LeftSideBar>
+              </div>
+              <div className="relative h-full w-full">
+                {isSignUpOpen ? (
+                  <div className="absolute z-50">
+                    <SignUp
+                      onSignUpOpen={isSignUp}
+                    ></SignUp>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {isLoginOpen ? (
+                  <div className="absolute z-50">
+                    <Login
+                      onLoginOpen={isLoginOpens}
+                      onLogin={loginUser}
+                      error={status}
+                    ></Login>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {/* <div className="absolute z-50" >
                 <Sender />
               </div> */}
-              <MainBody
-                currentCode={currentCode}
-                openCode={openCode}
-              ></MainBody>
+                <MainBody
+                  currentCode={currentCode}
+                  openCode={openCode}
+                ></MainBody>
+              </div>
             </div>
           </div>
+          <div className="bg-gray-50 h-12 w-full border">
+            <Footer ></Footer>
+          </div>
         </div>
-        <div className="bg-gray-50 h-12 w-full border">
-          <Footer saveHandle={saveHandle}></Footer>
-        </div>
-      </div>
-    </UserContext.Provider>
+      </UserContext.Provider>
     </FileContext.Provider>
   );
 }
