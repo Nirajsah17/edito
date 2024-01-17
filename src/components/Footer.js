@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import UserContext from '../lib/UserContext.js';
 
 let ws = null;
 let uid = null;
@@ -13,6 +14,12 @@ function Footer({ sendRequestToConnect, saveHandle }) {
   const [offerLst, setOfferLst] = useState([]);
   const [answerLst, setAnswerLst] = useState([]);
   const [msg, setMsg] = useState("");
+  
+   const {
+     user
+   } = useContext(UserContext);
+  //  setUser(user);
+  console.log(user);
 
   const msgBox = (e) => {
     setMsg(e.target.value);
@@ -150,7 +157,7 @@ function Footer({ sendRequestToConnect, saveHandle }) {
       <div className="flex flex-row justify-between items-center">
         <div>
           <input onChange={inputHandler} value={remotePeerIn} type="text" placeholder="type user id here... " />
-          <button onClick={connect}>connect</button>
+          <button onClick={connect}>{user.email}</button>
           <button onClick={sendRequestToConnect}>send</button>
         </div>
         <div className="flex flex-row">

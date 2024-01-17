@@ -3,7 +3,8 @@ import file from './images/file.svg';
 import Folder from './Folder';
 import File from './File';
 import Menu from './Menu';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import FileContext from '../lib/FileContext';
 
 export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileCreate, deleted, openFileInCode }) {
 
@@ -12,7 +13,8 @@ export default function LeftSideBar({ directory, isOpen, onFolderCreate, onFileC
   const [isFolderInput, setFolderInput] = useState(false);
   const [isFileInput, setFileInput] = useState(false);
   const [activeFileAndFolder, setActiveFileAndFolder] = useState({ folder: 'home' });
-
+   const {dir} = useContext(FileContext);
+  console.log(dir);
   const createFileOrFolder = (obj) => {
     const action = obj.action;
     const type = obj.type;

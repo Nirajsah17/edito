@@ -1,7 +1,7 @@
 import EditoDb from "./storeDB";
 import initialData from "./data/data.json";
 import { uuid } from "./lib/utility";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import LeftSideBar from "./components/LeftSidebar";
 import MainBody from "./components/MainBody";
@@ -12,7 +12,8 @@ import Sender from "./components/Sender";
 import Receiver from "./components/Receiver";
 import { deleteByName } from "./lib/utility";
 
-import UserContext from "./components/context";
+import UserContext from "./lib/UserContext";
+import FileContext from "./lib/FileContext";
 
 const store = new EditoDb();
 store.init();
@@ -25,14 +26,18 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [status, setStatus] = useState("");
   const [userLogo, setUserLogo] = useState({});
-  const [directory, setDirectory] = useState([]);
   const [activeFolder, setActiveFolder] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(true);
   const [openCode, setCode] = useState("");
-  const [user,setUser] = useState("")
   let codes = null;
   let activeFile = null;
-
+  const {users} = useContext(UserContext);
+  const [user,setUser] = useState(users);
+  
+  const {dir} = useContext(FileContext);
+  const [directory, setDirectory] = useState(dir.children);
+  
+  console.log('app',user);
   const showPopup = () => {
     setPopupVisible(true);
   };
@@ -131,7 +136,10 @@ export default function App() {
         const rootFolder = await store.Directory.getUserFolder(email);
         const fileSystem = rootFolder.root.children || [];
         setDirectory(fileSystem);
-        setUser(email);
+        setUser({
+          email: email
+        });
+        console.log(user);
         // setActiveFolder(fileSystem[0].name);
       }
       setStatus("email or password is invalid !!!");
@@ -261,7 +269,8 @@ export default function App() {
   };
 
   return (
-    <UserContext.Provider value={{user,setUser}}>
+    <FileContext.Provider value={{dir: directory, setDirectory}}>
+    <UserContext.Provider value={{user: user,setUser: setUser}}>
       <div className="flex flex-col justify-between h-screen w-full">
         <div className="shadow-md">
           <Navbar
@@ -322,5 +331,6 @@ export default function App() {
         </div>
       </div>
     </UserContext.Provider>
+    </FileContext.Provider>
   );
 }

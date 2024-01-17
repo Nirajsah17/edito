@@ -1,12 +1,11 @@
 import { useContext, useState } from "react"
 import logo from "./images/logo.svg"
 import { getRandomColorWithOpacity } from '../lib/color';
-import UserContext from "./context";
+import UserContext from "../lib/UserContext";
 
 export default function Navbar({ onToggleLeftSidebar, onSignUpOpen, onLoginOpen, isLoggedIn, userLogo, logout }) {
   const [isProfileOpen, setProfileOpen] = useState(false);
-  const {user ,setUser} = useContext(UserContext);
-
+  const {user} = useContext(UserContext);
   const handleProfile = () => {
     setProfileOpen(!isProfileOpen)
   }
@@ -28,7 +27,7 @@ export default function Navbar({ onToggleLeftSidebar, onSignUpOpen, onLoginOpen,
         {
           isLoggedIn ?
             <div className="px-0.5 flex flex-row justify-center">
-              <button onClick={handleProfile} className="flex px-4 py-1 m-1 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400" title={user} style={{ backgroundColor: userLogo.color }}>{userLogo.logo}</button>
+              <button onClick={handleProfile} className="flex px-4 py-1 m-1 items-center justify-center rounded-3xl border bg-orange-500 text-white cursor-pointer hover:border-2 hover:border-gray-400" title={user.email} style={{ backgroundColor: userLogo.color }}>{userLogo.logo}</button>
               {isProfileOpen ? <div className="flex bg-gray-50 flex-col w-32 absolute z-20 mt-10 mr-10 border">
                 <div className="p-2 hover:bg-gray-100 cursor-pointer">
                   <button className="">Profile</button>
