@@ -23,6 +23,7 @@ export default function App() {
   const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
 
+
   document.addEventListener("onSignUp",(e)=>{
     // console.log("events",e);
   });
@@ -37,7 +38,7 @@ export default function App() {
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
               <div>
-                <LeftSideBar isOpen={true}></LeftSideBar>
+                <LeftSideBar isOpen={true} ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
                 <MainBody currentCode={''} openCode={''} ></MainBody>

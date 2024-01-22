@@ -12,6 +12,21 @@ export default function LeftSideBar({ isOpen }) {
   const onFileCreate = () => {};
   const eventHandler = () => {};
 
+  const {dir, setDirectory} = useContext(FileContext);
+  
+  const renderNode = (node) => {
+    if (node.type === 'folder') {
+      return (
+        <Folder key={node.name} name={node.name} uuid={node.uuid}>
+          {node.children.map(renderNode)}
+        </Folder>
+      );
+    } else if (node.type === 'file') {
+      return <File key={node.name} name={node.name} uuid={node.uuid} />;
+    }
+    return null;
+  };
+
   return (
     isOpen ? 
     <div
@@ -30,7 +45,7 @@ export default function LeftSideBar({ isOpen }) {
         </div>
       </div>
       <div onClick={eventHandler} onContextMenu={eventHandler} className="w-full overflow-y-auto">
-        {/* {dir.map(renderNode)} */}
+        {dir.map(renderNode)}
       </div>
     </div>:
      <div>
