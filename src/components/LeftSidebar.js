@@ -6,7 +6,7 @@ import Menu from "./Menu";
 import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 
-export default function LeftSideBar({ isOpen }) {
+export default function LeftSideBar({ isVisible }) {
   const handleMenu = () => {};
   const onFolderCreate = () => {};
   const onFileCreate = () => {};
@@ -28,7 +28,7 @@ export default function LeftSideBar({ isOpen }) {
   };
 
   return (
-    isOpen ? 
+    <div style={{ display: isVisible ? 'block' : 'none' }}>
     <div
       onClick={handleMenu} className="flex flex-col bg-gray-50 w-60 h-full border-r items-center">
       <div className="flex w-full bg-gray-100 h-9 border-b justify-between items-center">
@@ -47,8 +47,7 @@ export default function LeftSideBar({ isOpen }) {
       <div onClick={eventHandler} onContextMenu={eventHandler} className="w-full overflow-y-auto">
         {dir.map(renderNode)}
       </div>
-    </div>:
-     <div>
+    </div>
     </div>
   );
 }

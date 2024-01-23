@@ -3,8 +3,8 @@ import logo from "./images/logo.svg";
 import { getRandomColorWithOpacity } from "../lib/color";
 import UserContext from "../lib/UserContext";
 
-export default function Navbar() {
-  const onToggleLeftSidebar = () => {};
+export default function Navbar({onToggleSidebar, onOpenSignup, onOpenLogin}) {
+  // const onToggleLeftSidebar = () => {};
   const handleProfile = () => {};
   const logout = () => {};
   const onSignUpOpen = () => {};
@@ -14,9 +14,9 @@ export default function Navbar() {
       <div className="flex flex-row justify-center">
         <div
           className="flex justify-center px-2 m-2 hover:bg-slate-200 cursor-pointer rounded"
-          onClick={onToggleLeftSidebar}
+         
         >
-          <button>
+          <button  onClick={onToggleSidebar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="1em"
@@ -52,7 +52,7 @@ export default function Navbar() {
         </div>
         <div className="px-0.5 flex flex-row justify-center">
           <button
-            onClick={onSignUpOpen}
+            onClick={onOpenSignup}
             className="m-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-3 border border-purple-500 hover:border-transparent rounded"
           >
             SignUp
@@ -60,7 +60,7 @@ export default function Navbar() {
         </div>
         <div className="px-1 flex flex-row justify-center">
           <button
-            onClick={onLoginOpen}
+            onClick={onOpenLogin}
             className="m-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-3 border border-purple-500 hover:border-transparent rounded"
           >
             Login
