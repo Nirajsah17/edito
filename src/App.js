@@ -26,7 +26,7 @@ export default function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
-
+  
   document.addEventListener("onSignUp",(e)=>{
     // console.log("events",e);
   });
