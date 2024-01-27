@@ -68,8 +68,12 @@ class Users {
     this.name = name;
   }
 
-  async getUser(user) {
-
+  async getUsers() {
+    const tx = this.db.transaction(this.name, 'readonly');
+    const store = tx.store;
+    const index = store.index('email'); // Assuming 'name' index is used, change as needed
+    const users = await index.getAll();
+    return users;
   }
 
   async getUserByEmail(email) {
