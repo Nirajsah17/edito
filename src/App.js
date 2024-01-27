@@ -33,13 +33,16 @@ export default function App() {
 
   useEffect(() => {
     setTimeout(async () => {
-      user.forEach((user) => {
-        store.Users.addUser(user);
-      });
       let _res = await store.Users.getUsers();
       setUser([...user, ..._res]);
     }, 500);
-  }, [user]);
+  }, []);
+
+  const onLogin = async (email)=>{
+    const dir = await store.Directory.getUserFolder(email);
+    // console.log(dir);
+    setDirectory(dir.children);
+  }
 
   return (
     <>
@@ -59,7 +62,7 @@ export default function App() {
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
               <div>
-                <LeftSideBar isVisible={isSidebarVisible}></LeftSideBar>
+                <LeftSideBar isVisible={isSidebarVisible} ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
                 <MainBody currentCode={""} openCode={""}></MainBody>
@@ -77,6 +80,8 @@ export default function App() {
             onCloseSignup={() => {
               setSignupOpen(false);
             }}
+            userStore={store.Users}
+            directoryStore={store.Directory}
           />
         )}
         {isLoginOpen && (
@@ -84,6 +89,8 @@ export default function App() {
             onCloseLogin={() => {
               setLoginOpen(false);
             }}
+            onLogin={onLogin}
+
           />
         )}
       </UserContext.Provider>

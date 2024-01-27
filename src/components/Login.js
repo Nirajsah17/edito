@@ -19,12 +19,7 @@ function Login({ onLoginOpen, onCloseLogin, onLogin, error }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let _user = {
-      email: email,
-      password: password,
-    };
     const userObj = findByEmail(user,email);
-    console.log(userObj);
     if(!userObj) {
       alert("user not Found") ;
       return;
@@ -35,6 +30,7 @@ function Login({ onLoginOpen, onCloseLogin, onLogin, error }) {
     }
     alert("Successfully logged in");
     onCloseLogin();
+    onLogin(email);
   };
 
   return (

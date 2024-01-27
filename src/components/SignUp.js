@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useContext } from "react";
 import UserContext from "../lib/UserContext";
 import { uuid } from "../lib/utility";
+import defaultDir from  "../data/schema.json"
 import { getRandomColorWithOpacity } from "../lib/color";
 
-function SignUp({ onCloseSignup, onSubmit }) {
+function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
@@ -32,6 +33,14 @@ function SignUp({ onCloseSignup, onSubmit }) {
       password: password,
     };
     setUser([...user, _user]);
+    userStore.addUser(_user);
+    const _directory = {
+      email: email,
+      uuid: uuid(),
+      ...defaultDir
+    }
+    directoryStore.addRoot(_directory);
+    alert(`${email} user has been created` );
     onCloseSignup();
   };
 

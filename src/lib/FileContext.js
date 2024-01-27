@@ -5,10 +5,10 @@ const FileContext = createContext({
     "name": "Root",
     "type": "folder",
     "children": [{
-        "name": "Documents",
+        "name": "Home",
         "type": "folder",
         "children": [{
-            "name": "Resume.pdf",
+            "name": "editor.txt",
             "type": "file",
             "size": "2MB",
             "created_at": "2023-01-01T12:00:00Z"
