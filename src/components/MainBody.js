@@ -5,6 +5,7 @@ import '../custom.css';
 
 
 function MainBody({ currentCode, openCode }) {
+  
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);

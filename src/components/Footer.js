@@ -14,7 +14,7 @@ function Footer() {
           <div className="p-2"></div>
           <div className="">
             <button
-              className="p-2 bg-purple-600 text-white"
+              className="p-1 bg-purple-600 text-white"
             >
               connect ?
             </button>

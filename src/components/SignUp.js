@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 import { getRandomColorWithOpacity } from "../lib/color";
 
-function SignUp({ onSignUpOpen, onSubmit }) {
+function SignUp({ onCloseSignup, onSubmit }) {
   const { dir, setDirectory } = useContext(FileContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,14 +28,14 @@ function SignUp({ onSignUpOpen, onSubmit }) {
 
   return (
     <>
-      <div id="authentication-modal" className="relative flex z-50 max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+      <div id="authentication-modal" className="absolute flex z-50 max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
         <div className=" max-h-full w-full max-w-md p-4">
           <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
             <div className="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Sign in to our platform
               </h3>
-              <button type="button" onClick={onSignUpOpen} className="end-2.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+              <button type="button" onClick={onCloseSignup} className="end-2.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                 <svg
                   className="h-3 w-3"
                   aria-hidden="true"

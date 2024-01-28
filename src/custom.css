@@ -3,8 +3,9 @@
   margin: 0;
   padding: 10px;
   border: 1px solid gray;
-  width: calc(100% - 32px);
+  /* width: calc(100% - 32px); */
   height: 100%;
+  width: 100%;
 }
 
 #editing,
