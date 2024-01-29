@@ -7,21 +7,29 @@ import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 
 export default function LeftSideBar({ isVisible }) {
+  const { dir, setDirectory } = useContext(FileContext);
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeFolder, setActiveFolder] = useState();
   const [activeFile, setActiveFile] = useState();
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleMenu = () => {
     setIsMenuOpen(false);
   };
   const onFolderCreate = () => { };
   const onFileCreate = () => { };
-  const eventHandler = (e) => {
+  const contextMenuHandler = (e) => {
     e.preventDefault();
-    setPosition({ x: e.pageX, y: e.pageY });
-    setIsMenuOpen(true);
+    const xPos = e.clientX + window.scrollX;
+    const yPos = e.clientY + window.scrollY;
 
+    setPosition({
+      x: xPos,
+      y: yPos
+    });
+    setIsMenuOpen(true);
   };
 
   const handleActiveItem = (e) => {
@@ -30,14 +38,50 @@ export default function LeftSideBar({ isVisible }) {
 
     if(_activeFolder){
       setActiveFolder(_activeFolder);
-
+      console.log(_activeFolder);
     }
     if(_activeFile){
       setActiveFile(_activeFile);
     }
-
   }
-  const { dir, setDirectory } = useContext(FileContext);
+  
+  const handleMenuItem = (e) => {
+    const menuItem = e.target.id;
+    if (!menuItem) return;
+    setIsMenuOpen(false);
+     switch (menuItem) {
+       case "newFile":
+          setIsInputVisible(true);
+          console.log(inputValue);
+         break;
+       case "newFolder":
+          setIsInputVisible(true);
+         break;
+       case "cut":
+          setIsInputVisible(true);
+         break;
+       case "copy":
+          setIsInputVisible(true);
+         break;
+       case "rename":
+          setIsInputVisible(true);
+         break;
+       case "delete":
+          setIsInputVisible(true);
+         break;
+
+       default:
+         break;
+     }
+  };
+  
+  const handleInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setInputValue(e.target.value);
+      setIsInputVisible(false);
+    }
+  };
+  
 
   const renderNode = (node) => {
     if (node.type === 'folder') {
@@ -51,7 +95,7 @@ export default function LeftSideBar({ isVisible }) {
     }
     return null;
   };
-
+  
   return (
     <div style={{ display: isVisible ? 'block' : 'none' }}>
       <div
@@ -69,16 +113,23 @@ export default function LeftSideBar({ isVisible }) {
             </div>
           </div>
         </div>
-        <div onClick={handleActiveItem} onContextMenu={eventHandler} className="w-full overflow-y-auto">
+        <div onClick={handleActiveItem} onContextMenu={contextMenuHandler} className="w-full overflow-y-auto">
           {dir.map(renderNode)}
         </div>
       </div>
-      <div>
         {isMenuOpen && (
-          <Menu position={position} />
+          <Menu position={position} onMenuItemClick={handleMenuItem}/>
         )
         }
-      </div>
+      {isInputVisible && (
+        <input
+          type="text"
+          placeholder="Enter folder name"
+          onKeyDown={handleInputKeyDown}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+      )}
     </div>
   );
 }

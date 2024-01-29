@@ -7,8 +7,7 @@ export default function Navbar({onToggleSidebar, onOpenSignup, onOpenLogin}) {
   // const onToggleLeftSidebar = () => {};
   const handleProfile = () => {};
   const logout = () => {};
-  const onSignUpOpen = () => {};
-  const onLoginOpen = () => {};
+  
   return (
     <div className="flex flex-row justify-between w-full">
       <div className="flex flex-row justify-center">
