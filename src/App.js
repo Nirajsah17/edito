@@ -22,22 +22,42 @@ export default function App() {
 
   const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
-  
+
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
-  
-  document.addEventListener("onSignUp",(e)=>{
+
+  document.addEventListener("onSignUp", (e) => {
     // console.log("events",e);
   });
 
+  useEffect(() => {
+    setTimeout(async () => {
+      let _res = await store.Users.getUsers();
+      setUser([...user, ..._res]);
+    }, 500);
+  }, []);
+
+  const onLogin = async (email)=>{
+    const dir = await store.Directory.getUserFolder(email);
+    // console.log(dir);
+    setDirectory(dir.children);
+  }
+
   return (
     <>
-    <FileContext.Provider value={{ dir: directory, setDirectory }}>
-      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+      <FileContext.Provider value={{ dir: directory, setDirectory }}>
         <div className="flex flex-col justify-between h-screen w-full">
           <div className="shadow-md">
-            <Navbar onToggleSidebar={() => setSidebarVisible(!isSidebarVisible)} onOpenSignup={() => { setSignupOpen(true) }} onOpenLogin={() => {setLoginOpen(true)}}></Navbar>
+            <Navbar
+              onToggleSidebar={() => setSidebarVisible(!isSidebarVisible)}
+              onOpenSignup={() => {
+                setSignupOpen(true);
+              }}
+              onOpenLogin={() => {
+                setLoginOpen(true);
+              }}
+            ></Navbar>
           </div>
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
@@ -45,7 +65,7 @@ export default function App() {
                 <LeftSideBar isVisible={isSidebarVisible} ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody currentCode={''} openCode={''} ></MainBody>
+                <MainBody currentCode={""} openCode={""}></MainBody>
               </div>
             </div>
           </div>
@@ -53,11 +73,27 @@ export default function App() {
             <Footer></Footer>
           </div>
         </div>
-      </UserContext.Provider>
-    </FileContext.Provider>
+      </FileContext.Provider>
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        {isSignupOpen && (
+          <SignUp
+            onCloseSignup={() => {
+              setSignupOpen(false);
+            }}
+            userStore={store.Users}
+            directoryStore={store.Directory}
+          />
+        )}
+        {isLoginOpen && (
+          <Login
+            onCloseLogin={() => {
+              setLoginOpen(false);
+            }}
+            onLogin={onLogin}
 
-    {isSignupOpen && <SignUp onCloseSignup={() => { setSignupOpen(false)}} />}
-    {isLoginOpen && <Login onCloseLogin={() => { setLoginOpen(false)}} />}
+          />
+        )}
+      </UserContext.Provider>
     </>
   );
 }

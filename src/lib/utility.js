@@ -20,7 +20,13 @@ function deleteByName(tree, name) {
     return false;
 }
 
+function findByEmail(Users,email){
+  const _user = Users.find(user=> user.email == email);
+  if(_user) return _user;
+}
+
 export {
     uuid,
-    deleteByName
+    deleteByName,
+    findByEmail
 }

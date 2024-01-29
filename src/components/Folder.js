@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const Folder = ({ name, children , uuid}) => {
   const [isOpen, setIsOpen] = useState(false);
-  
   const toggleFolder = (e) => {
     setIsOpen(!isOpen);
   };
