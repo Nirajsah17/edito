@@ -5,21 +5,25 @@ import File from "./File";
 import Menu from "./Menu";
 import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
+import { uuid } from "../lib/utility";
 
-export default function LeftSideBar({ isVisible }) {
+export default function LeftSideBar({ isVisible, directoryStore }) {
   const { dir, setDirectory } = useContext(FileContext);
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeFolder, setActiveFolder] = useState();
   const [activeFile, setActiveFile] = useState();
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [isFile,setIsFile] = useState(false);
 
   const handleMenu = () => {
     setIsMenuOpen(false);
   };
-  const onFolderCreate = () => { };
-  const onFileCreate = () => { };
+
+  const onFolderCreate = () => {};
+  const onFileCreate = () => {};
+
   const contextMenuHandler = (e) => {
     e.preventDefault();
     const xPos = e.clientX + window.scrollX;
@@ -27,7 +31,7 @@ export default function LeftSideBar({ isVisible }) {
 
     setPosition({
       x: xPos,
-      y: yPos
+      y: yPos,
     });
     setIsMenuOpen(true);
   };
@@ -36,98 +40,135 @@ export default function LeftSideBar({ isVisible }) {
     const _activeFolder = e.target.dataset.folder;
     const _activeFile = e.target.dataset.file;
 
-    if(_activeFolder){
+    if (_activeFolder) {
       setActiveFolder(_activeFolder);
-      console.log(_activeFolder);
     }
-    if(_activeFile){
+    if (_activeFile) {
       setActiveFile(_activeFile);
     }
-  }
-  
+  };
+
   const handleMenuItem = (e) => {
     const menuItem = e.target.id;
     if (!menuItem) return;
     setIsMenuOpen(false);
-     switch (menuItem) {
-       case "newFile":
-          setIsInputVisible(true);
-          console.log(inputValue);
-         break;
-       case "newFolder":
-          setIsInputVisible(true);
-         break;
-       case "cut":
-          setIsInputVisible(true);
-         break;
-       case "copy":
-          setIsInputVisible(true);
-         break;
-       case "rename":
-          setIsInputVisible(true);
-         break;
-       case "delete":
-          setIsInputVisible(true);
-         break;
+    switch (menuItem) {
+      case "newFile":
+        setIsInputVisible(true);
+        setIsFile(true);
+        break;
+      case "newFolder":
+        setIsInputVisible(true);
+        setIsFile(false);
+        break;
+      case "cut":
+        // setIsInputVisible(true);
+        break;
+      case "copy":
+        // setIsInputVisible(true);
+        break;
+      case "rename":
+        setIsInputVisible(true);
+        break;
+      case "delete":
+        // setIsInputVisible(true);
+        break;
 
-       default:
-         break;
-     }
-  };
-  
-  const handleInputKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      setInputValue(e.target.value);
-      setIsInputVisible(false);
+      default:
+        break;
     }
   };
-  
+
+  const handleInputKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      setInputValue(e.target.value);
+      setIsInputVisible(false);
+      let email = localStorage.getItem("user");
+      if (isFile) {
+        let fileObj = {
+          uuid: uuid(),
+          name: e.target.value,
+          type: "file",
+          size: "1 MB",
+          created_at: new Date().toISOString(),
+        };
+        await directoryStore.addInDirectory(email, activeFolder, fileObj);
+        const allFolder = await directoryStore.getUserFolder(email);
+        setDirectory(allFolder.children);
+      } else {
+        let folder = {
+          "uuid": uuid(),
+          "name": e.target.value,
+          "type": "folder",
+          "children": []
+      };
+        await directoryStore.addInDirectory(email, activeFolder, folder);
+        const allFolder = await directoryStore.getUserFolder(email);
+        setDirectory(allFolder.children);
+      }
+    }
+  };
 
   const renderNode = (node) => {
-    if (node.type === 'folder') {
+    if (node.type === "folder") {
       return (
         <Folder key={node.name} name={node.name} uuid={node.uuid}>
           {node.children.map(renderNode)}
         </Folder>
       );
-    } else if (node.type === 'file') {
+    } else if (node.type === "file") {
       return <File key={node.name} name={node.name} uuid={node.uuid} />;
     }
     return null;
   };
-  
+
   return (
-    <div style={{ display: isVisible ? 'block' : 'none' }}>
+    <div style={{ display: isVisible ? "block" : "none" }}>
       <div
-        onClick={handleMenu} className="flex flex-col bg-gray-50 w-60 h-full border-r items-center">
+        onClick={handleMenu}
+        className="flex flex-col bg-gray-50 w-60 h-full border-r items-center"
+      >
         <div className="flex w-full bg-gray-100 h-9 border-b justify-between items-center">
           <div className="p-2 truncate text-gray-500">
             <b>Home</b>
           </div>
           <div className="flex">
             <div className="p-2">
-              <img onClick={onFolderCreate} className="cursor-pointer hover:bg-gray-300 hover:rounded-md" src={folder} height={24} width={24}></img>
+              <img
+                onClick={onFolderCreate}
+                className="cursor-pointer hover:bg-gray-300 hover:rounded-md"
+                src={folder}
+                height={24}
+                width={24}
+              ></img>
             </div>
             <div className="p-2">
-              <img onClick={onFileCreate} className="cursor-pointer hover:bg-gray-300 hover:rounded-md" src={file} height={24} width={24}></img>
+              <img
+                onClick={onFileCreate}
+                className="cursor-pointer hover:bg-gray-300 hover:rounded-md"
+                src={file}
+                height={24}
+                width={24}
+              ></img>
             </div>
           </div>
         </div>
-        <div onClick={handleActiveItem} onContextMenu={contextMenuHandler} className="w-full overflow-y-auto">
+        <div
+          onClick={handleActiveItem}
+          onContextMenu={contextMenuHandler}
+          className="w-full overflow-y-auto"
+        >
           {dir.map(renderNode)}
         </div>
       </div>
-        {isMenuOpen && (
-          <Menu position={position} onMenuItemClick={handleMenuItem}/>
-        )
-        }
+      {isMenuOpen && (
+        <Menu position={position} onMenuItemClick={handleMenuItem} />
+      )}
       {isInputVisible && (
         <input
           type="text"
           placeholder="Enter folder name"
           onKeyDown={handleInputKeyDown}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
         />
       )}
     </div>

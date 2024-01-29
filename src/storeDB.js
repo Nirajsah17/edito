@@ -1,28 +1,26 @@
-import {
-  openDB
-} from 'idb';
-
-
+import { openDB } from "idb";
+import { insertItem } from "./lib/utility";
 const schema = {
-  dbName: 'Edito',
+  dbName: "Edito",
   version: 1,
-  stores: [{
-    name: 'Users',
-    index: 'email',
-    unique: true
-  },
-  {
-    name: 'Directory',
-    index: 'email',
-    unique: true
-  },
-  {
-    name: 'File',
-    index: 'email',
-    unique: false
-  }
-  ]
-}
+  stores: [
+    {
+      name: "Users",
+      index: "email",
+      unique: true,
+    },
+    {
+      name: "Directory",
+      index: "email",
+      unique: true,
+    },
+    {
+      name: "File",
+      index: "email",
+      unique: false,
+    },
+  ],
+};
 class EditoDb {
   constructor() {
     this.dbSchema = schema;
@@ -36,31 +34,29 @@ class EditoDb {
     try {
       this.db = await openDB(this.dbSchema.dbName, this.dbSchema.version, {
         upgrade: async (db) => {
-          this.dbSchema.stores.forEach(store => {
+          this.dbSchema.stores.forEach((store) => {
             if (!db.objectStoreNames.contains(store.name)) {
               const objectStore = db.createObjectStore(store.name, {
-                keyPath: 'uuid',
+                keyPath: "uuid",
               });
               objectStore.createIndex(store.index, store.index, {
-                unique: store.unique
+                unique: store.unique,
               });
-              console.log(`${store.name} is successfully created !!!`)
+              console.log(`${store.name} is successfully created !!!`);
             }
-          })
-        }
+          });
+        },
       });
-      this.Users = new Users(this.db, 'Users');
+      this.Users = new Users(this.db, "Users");
       console.log(this.db);
-      this.Directory = new Directory(this.db, 'Directory');
-      this.File = new File(this.db, 'File');
+      this.Directory = new Directory(this.db, "Directory");
+      this.File = new File(this.db, "File");
     } catch (err) {
       console.log(err);
     }
-    return this.db
+    return this.db;
   }
-
 }
-
 
 class Users {
   constructor(db, name) {
@@ -69,50 +65,52 @@ class Users {
   }
 
   async getUsers() {
-    const tx = this.db.transaction(this.name, 'readonly');
+    const tx = this.db.transaction(this.name, "readonly");
     const store = tx.store;
-    const index = store.index('email'); // Assuming 'name' index is used, change as needed
+    const index = store.index("email"); // Assuming 'name' index is used, change as needed
     const users = await index.getAll();
     return users;
   }
 
   async getUserByEmail(email) {
     try {
-      const index = this.db.transaction(this.name).store.index('email');
+      const index = this.db.transaction(this.name).store.index("email");
       const user = await index.get(email);
       return user;
     } catch (error) {
-      console.error('Error retrieving user by email:', error);
+      console.error("Error retrieving user by email:", error);
     }
   }
 
   async getUserById(userId) {
     try {
       const user = await this.db.get(this.name, userId);
-      console.log('User retrieved by ID:', user);
+      console.log("User retrieved by ID:", user);
       return user;
     } catch (error) {
-      console.error('Error retrieving user by ID:', error);
+      console.error("Error retrieving user by ID:", error);
     }
   }
 
   async deleteUser(userId) {
     try {
       if (!this.db) {
-        console.error('Database is not initialized. Please wait for initialization.');
+        console.error(
+          "Database is not initialized. Please wait for initialization."
+        );
         return;
       }
       await this.db.delete(this.name, userId);
-      console.log('User deleted successfully!');
+      console.log("User deleted successfully!");
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error("Error deleting user:", error);
     }
   }
 
   async updateUser(updatedUser) {
     // TODO: fix me
-    await this.db.get(this.name)
-    console.log('user updated');
+    await this.db.get(this.name);
+    console.log("user updated");
   }
 
   async addUser(user) {
@@ -127,7 +125,6 @@ class Users {
       console.log("Error while adding user : ", error);
     }
   }
-
 }
 
 class Directory {
@@ -138,11 +135,11 @@ class Directory {
 
   async getUserFolder(email) {
     try {
-      const index = this.dbm.transaction(this.name).store.index('email');
+      const index = this.dbm.transaction(this.name).store.index("email");
       const userFolder = await index.get(email);
       return userFolder;
     } catch (error) {
-      console.error('Error retrieving user by email:', error);
+      console.error("Error retrieving user by email:", error);
     }
   }
 
@@ -167,8 +164,15 @@ class Directory {
     await this.dbm.put(this.name, fileSystem);
     console.log(fileSystem);
   }
-}
 
+  async addInDirectory(email, parentFolderId, fileObj) {
+    if (!(email && parentFolderId)) return;
+    const fileSystem = await this.getUserFolder(email);
+    const updatedDir = insertItem(fileSystem, parentFolderId, fileObj);
+    console.log("updated", updatedDir);
+    await this.dbm.put(this.name, updatedDir);
+  }
+}
 
 class File {
   constructor(db, name) {
@@ -189,27 +193,26 @@ class File {
     }
   }
 
-  async getFile(uuid){
-    try{
-      const file = await this.db.get(this.name, uuid)
-      return file
-    }catch(err){
+  async getFile(uuid) {
+    try {
+      const file = await this.db.get(this.name, uuid);
+      return file;
+    } catch (err) {
       console.log(err);
     }
   }
 
-  async updateFile(uuid, content){
-    try{
-      if(!uuid) return;
+  async updateFile(uuid, content) {
+    try {
+      if (!uuid) return;
       const file = await this.getFile(uuid);
       file.content = content;
-      await this.db.put(this.name,file);
+      await this.db.put(this.name, file);
       console.log("file updated");
-    }catch(err){
-      console.error("err while  update file :",err);
+    } catch (err) {
+      console.error("err while  update file :", err);
     }
   }
-
 }
 
 // export default Store;

@@ -25,8 +25,35 @@ function findByEmail(Users,email){
   if(_user) return _user;
 }
 
+function insertItem(jsonData, parentUUID, newItem) {
+    function recursiveInsert(node) {
+        if (node.uuid === parentUUID) {
+            if (!node.children) {
+                node.children = [];
+            }
+            node.children.push(newItem);
+            return true;
+        } else if (node.children) {
+            for (let i = 0; i < node.children.length; i++) {
+                if (recursiveInsert(node.children[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    if (recursiveInsert(jsonData)) {
+        return jsonData;
+    } else {
+        console.log("Parent UUID not found in the folder structure.");
+        return null;
+    }
+}
+
 export {
     uuid,
     deleteByName,
-    findByEmail
+    findByEmail,
+    insertItem
 }

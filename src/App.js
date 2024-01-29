@@ -62,7 +62,7 @@ export default function App() {
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
               <div>
-                <LeftSideBar isVisible={isSidebarVisible} ></LeftSideBar>
+                <LeftSideBar isVisible={isSidebarVisible} directoryStore={store.Directory}></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
                 <MainBody currentCode={""} openCode={""}></MainBody>

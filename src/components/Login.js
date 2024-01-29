@@ -31,6 +31,7 @@ function Login({ onLoginOpen, onCloseLogin, onLogin, error }) {
     alert("Successfully logged in");
     onCloseLogin();
     onLogin(email);
+    localStorage.setItem("user", email);
   };
 
   return (

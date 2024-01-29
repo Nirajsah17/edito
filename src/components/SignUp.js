@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import UserContext from "../lib/UserContext";
 import { uuid } from "../lib/utility";
 import defaultDir from  "../data/schema.json"
+
 import { getRandomColorWithOpacity } from "../lib/color";
 
 function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
