@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 import { uuid } from "../lib/utility";
 
-export default function LeftSideBar({ isVisible, directoryStore }) {
+export default function LeftSideBar({ isVisible, directoryStore,activeFileData}) {
   const { dir, setDirectory } = useContext(FileContext);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,6 +45,7 @@ export default function LeftSideBar({ isVisible, directoryStore }) {
     }
     if (_activeFile) {
       setActiveFile(_activeFile);
+      activeFileData(activeFile)
     }
   };
 

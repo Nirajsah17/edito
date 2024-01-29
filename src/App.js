@@ -20,12 +20,18 @@ export default function App() {
   const { users } = useContext(UserContext);
   const [user, setUser] = useState(users);
 
+  const [activeFile,setActiveFile] = useState("");
+
   const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
 
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
+
+  const _setActiveFile = (file)=>{
+    setActiveFile(file);
+  }
 
   document.addEventListener("onSignUp", (e) => {
     // console.log("events",e);
@@ -62,10 +68,10 @@ export default function App() {
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
               <div>
-                <LeftSideBar isVisible={isSidebarVisible} directoryStore={store.Directory}></LeftSideBar>
+                <LeftSideBar isVisible={isSidebarVisible} directoryStore={store.Directory} activeFileData={_setActiveFile}></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody currentCode={""} openCode={""}></MainBody>
+                <MainBody openCode={""} activeFile={activeFile}></MainBody>
               </div>
             </div>
           </div>
