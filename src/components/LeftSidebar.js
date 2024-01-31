@@ -21,8 +21,14 @@ export default function LeftSideBar({ isVisible, directoryStore,activeFileData})
     setIsMenuOpen(false);
   };
 
-  const onFolderCreate = () => {};
-  const onFileCreate = () => {};
+  const onFolderCreate = () => {
+     setIsInputVisible(true);
+     setIsFile(false);
+  };
+  const onFileCreate = () => {
+    setIsInputVisible(true);
+    setIsFile(true);
+  };
 
   const contextMenuHandler = (e) => {
     e.preventDefault();
@@ -109,7 +115,7 @@ export default function LeftSideBar({ isVisible, directoryStore,activeFileData})
       }
     }
   };
-
+  
   const renderNode = (node) => {
     if (node.type === "folder") {
       return (

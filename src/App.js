@@ -7,6 +7,7 @@ import MainBody from "./components/MainBody";
 import SignUp from "./components/SignUp.js";
 import Login from "./components/Login.js";
 import Footer from "./components/Footer";
+import Profile from "./components/Profile.js";
 
 import UserContext from "./lib/UserContext";
 import FileContext from "./lib/FileContext";
@@ -28,7 +29,8 @@ export default function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
-
+  const [userName,  setUserName] = useState("");
+  
   const _setActiveFile = (file)=>{
     setActiveFile(file);
   }
@@ -46,10 +48,11 @@ export default function App() {
 
   const onLogin = async (email)=>{
     const dir = await store.Directory.getUserFolder(email);
-    // console.log(dir);
+    const _userName = email.charAt(0).toUpperCase() + email.slice(1);
+    console.log(_userName);
+    setUserName(_userName);
     setDirectory(dir.children);
   }
-
   return (
     <>
       <FileContext.Provider value={{ dir: directory, setDirectory }}>
@@ -63,6 +66,7 @@ export default function App() {
               onOpenLogin={() => {
                 setLoginOpen(true);
               }}
+              userName = {userName}
             ></Navbar>
           </div>
           <div className="flex flex-col justify-between flex-1">

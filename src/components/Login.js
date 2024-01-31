@@ -33,7 +33,7 @@ function Login({ onLoginOpen, onCloseLogin, onLogin, error }) {
     onLogin(email);
     localStorage.setItem("user", email);
   };
-
+  
   return (
     <>
       <div
