@@ -21,7 +21,7 @@ export default function App() {
   const { users } = useContext(UserContext);
   const [user, setUser] = useState(users);
 
-  const [activeFile,setActiveFile] = useState("");
+  const [activeFile, setActiveFile] = useState("");
 
   const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
@@ -29,29 +29,38 @@ export default function App() {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
-  const [userName,  setUserName] = useState("");
-  
-  const _setActiveFile = (file)=>{
+  const [userName, setUserName] = useState("");
+
+  const _setActiveFile = (file) => {
     setActiveFile(file);
-  }
+  };
 
   document.addEventListener("onSignUp", (e) => {
     // console.log("events",e);
   });
 
   useEffect(() => {
+    // Updation of user context
     setTimeout(async () => {
       let _res = await store.Users.getUsers();
       setUser([...user, ..._res]);
-    }, 500);
+      let _user = localStorage.getItem("user");
+      if (_user) {
+        const _userName = _user.charAt(0).toUpperCase() + _user.slice(1);
+        setUserName(_userName);
+        const directory = await store.Directory.getUserFolder(_user);
+        setDirectory(directory.children)
+      }
+    }, 10);
+    // User Fetch if logged in
   }, []);
 
-  const onLogin = async (email)=>{
+  const onLogin = async (email) => {
     const dir = await store.Directory.getUserFolder(email);
     const _userName = email.charAt(0).toUpperCase() + email.slice(1);
     setUserName(_userName);
     setDirectory(dir.children);
-  }
+  };
 
   return (
     <>
@@ -66,22 +75,27 @@ export default function App() {
               onOpenLogin={() => {
                 setLoginOpen(true);
               }}
-              userName = {userName}
-              setUserName = {setUserName}
+              userName={userName}
+              setUserName={setUserName}
             ></Navbar>
           </div>
           <div className="flex flex-col justify-between flex-1">
             <div className="flex flex-row h-full w-full">
               <div>
-                <LeftSideBar isVisible={isSidebarVisible} directoryStore={store.Directory} activeFileData={_setActiveFile}></LeftSideBar>
+                <LeftSideBar
+                  isVisible={isSidebarVisible}
+                  directoryStore={store.Directory}
+                  fileStore={store.File}
+                  activeFileData={_setActiveFile}
+                ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody openCode={""} activeFile={activeFile}></MainBody>
+                <MainBody openCode={""} activeFile={activeFile} fileStore={store.File}></MainBody>
               </div>
             </div>
           </div>
           {/* <div className="bg-gray-50 h-12 w-full border"> */}
-            <Footer></Footer>
+          <Footer></Footer>
           {/* </div> */}
         </div>
       </FileContext.Provider>
@@ -101,7 +115,6 @@ export default function App() {
               setLoginOpen(false);
             }}
             onLogin={onLogin}
-
           />
         )}
       </UserContext.Provider>

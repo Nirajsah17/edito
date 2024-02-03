@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 import { uuid } from "../lib/utility";
 
-export default function LeftSideBar({ isVisible, directoryStore,activeFileData}) {
+export default function LeftSideBar({ isVisible, directoryStore,fileStore,activeFileData}) {
   const { dir, setDirectory } = useContext(FileContext);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,7 +51,8 @@ export default function LeftSideBar({ isVisible, directoryStore,activeFileData})
     }
     if (_activeFile) {
       setActiveFile(_activeFile);
-      activeFileData(activeFile)
+      activeFileData(activeFile);
+      
     }
   };
 
@@ -102,6 +103,11 @@ export default function LeftSideBar({ isVisible, directoryStore,activeFileData})
         await directoryStore.addInDirectory(email, activeFolder, fileObj);
         const allFolder = await directoryStore.getUserFolder(email);
         setDirectory(allFolder.children);
+        fileStore.addFile({
+          email: email,
+          uuid: fileObj.uuid,
+          content: ""
+        })
       } else {
         let folder = {
           "uuid": uuid(),

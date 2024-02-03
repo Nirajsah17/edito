@@ -3,7 +3,7 @@ import "prismjs/themes/prism.css";
 import Prism from "prismjs";
 import "../custom.css";
 
-function MainBody({ openCode, activeFile }) {
+function MainBody({ openCode, activeFile, fileStore }) {
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
@@ -16,18 +16,49 @@ function MainBody({ openCode, activeFile }) {
     }
   };
 
+  const saveFile = (filename, content) => {
+    console.log({ filename, content });
+    setTimeout(async () => {
+      if (fileStore) {
+        await fileStore.updateFile(filename, content);
+      }
+    }, 200);
+  };
+
+  useEffect(()=>{
+    setTimeout(async ()=>{
+      if(!fileStore) return;
+      const obj = await fileStore.getFile(activeFile);
+      if(obj){
+        setText(obj.content)
+      }
+      // console.log(obj);
+    },10)
+    
+  },[activeFile]);
+
+  const _handleKeyDown = (e) => {
+    const ctrl = e.ctrlKey;
+    const key = e.which;
+    if (ctrl) {
+      if (ctrl && e.which == 83) {
+        e.preventDefault();
+        saveFile(activeFile, text);
+      }
+    }
+  };
+
+  document.addEventListener("keydown", _handleKeyDown);
+
   const handleText = (e) => {
     const newText = e.target.value;
     renderFn(newText);
   };
   const renderFn = (text) => {
-    text
-      .replace(new RegExp("&", "g"), "&")
-      .replace(new RegExp("<", "g"), "<");
+    text.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<");
     setText(text);
     code.current.scrollTop = editing.current.scrollTop;
     code.current.scrollLeft = editing.current.scrollLeft;
-    console.log(activeFile);
   };
 
   useEffect(() => {

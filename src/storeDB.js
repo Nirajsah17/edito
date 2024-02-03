@@ -48,7 +48,6 @@ class EditoDb {
         },
       });
       this.Users = new Users(this.db, "Users");
-      console.log(this.db);
       this.Directory = new Directory(this.db, "Directory");
       this.File = new File(this.db, "File");
     } catch (err) {
