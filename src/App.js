@@ -49,10 +49,10 @@ export default function App() {
   const onLogin = async (email)=>{
     const dir = await store.Directory.getUserFolder(email);
     const _userName = email.charAt(0).toUpperCase() + email.slice(1);
-    console.log(_userName);
     setUserName(_userName);
     setDirectory(dir.children);
   }
+
   return (
     <>
       <FileContext.Provider value={{ dir: directory, setDirectory }}>
@@ -67,6 +67,7 @@ export default function App() {
                 setLoginOpen(true);
               }}
               userName = {userName}
+              setUserName = {setUserName}
             ></Navbar>
           </div>
           <div className="flex flex-col justify-between flex-1">
@@ -79,9 +80,9 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 h-12 w-full border">
+          {/* <div className="bg-gray-50 h-12 w-full border"> */}
             <Footer></Footer>
-          </div>
+          {/* </div> */}
         </div>
       </FileContext.Provider>
       <UserContext.Provider value={{ user: user, setUser: setUser }}>

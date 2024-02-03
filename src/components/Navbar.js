@@ -8,24 +8,11 @@ export default function Navbar({
   onOpenSignup,
   onOpenLogin,
   userName,
+  setUserName
 }) {
 
   const [profileOpen, setProfileOpen] = useState(false);
  
-  const handleProfile = () => {
-    // Implement logic to open the user profile
-    setProfileOpen(true);
-  };
-  
-  const logout = () => {
-    // Implement logout logic
-  };
-
-  const handleLogoutUser = ()=> {
-    userName = "";
-    console.log(userName);
-  }
-
   return (
   <>
     <div className="flex flex-row justify-between w-full h-12">
@@ -46,13 +33,12 @@ export default function Navbar({
         {userName ? (
           <div className="m-1 flex flex-row justify-center relative">
             <button
-              onClick={handleProfile}
+              onClick={() => {setProfileOpen(true)}}
               className="flex items-center justify-center rounded-full px-4 border bg-orange-500 text-white cursor-pointer hover:border-1 hover:border-gray-400"
               title={userName}
             >
               {userName.charAt(0)}
             </button>
-            {profileOpen ?  <Profile logoutUser={handleLogoutUser} closeProfile={() => {setProfileOpen(false)}}></Profile> : ""}
           </div>
         ) : (
           <>
@@ -76,6 +62,10 @@ export default function Navbar({
         )}
       </div>
     </div>
+    {profileOpen ?  <Profile logoutUser={() => { 
+      setUserName("");
+      setProfileOpen(false);
+    }} closeProfile={() => {setProfileOpen(false)}}></Profile> : null}
     </>
   );
 }
