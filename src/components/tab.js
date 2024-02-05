@@ -1,8 +1,11 @@
 import { useState } from "react";
 import symbol from "../data/symbol.json";
 
-function Tabs(TabList) {
+function Tabs(activeFile) {
   const [activeTab, setActiveTab] = useState("");
+  // Check the active file is present in the tbs list if not add them here set to active
+  // perform CRUD operation on tabs
+  // show the result based on file info
   const _tabs = [
     { name: "index.js" },
     { name: "App.js" },

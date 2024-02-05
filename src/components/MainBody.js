@@ -30,6 +30,7 @@ function MainBody({ openCode, activeFile, fileStore }) {
     setTimeout(async () => {
       if (!fileStore) return;
       const obj = await fileStore.getFile(activeFile);
+
       if (obj) {
         setText(obj.content);
       }
@@ -75,7 +76,7 @@ function MainBody({ openCode, activeFile, fileStore }) {
   return (
     <>
       <div className="w-full h-full flex flex-col">
-      <Tabs />
+      <Tabs activeFile={activeFile}/>
         <textarea
           id="editing"
           spellCheck="false"
