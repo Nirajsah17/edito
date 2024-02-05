@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "prismjs/themes/prism.css";
 import Prism from "prismjs";
 import "../custom.css";
+import { Tabs } from "./tab";
 
 function MainBody({ openCode, activeFile, fileStore }) {
   const [text, setText] = useState("");
@@ -25,17 +26,16 @@ function MainBody({ openCode, activeFile, fileStore }) {
     }, 200);
   };
 
-  useEffect(()=>{
-    setTimeout(async ()=>{
-      if(!fileStore) return;
+  useEffect(() => {
+    setTimeout(async () => {
+      if (!fileStore) return;
       const obj = await fileStore.getFile(activeFile);
-      if(obj){
-        setText(obj.content)
+      if (obj) {
+        setText(obj.content);
       }
       // console.log(obj);
-    },10)
-    
-  },[activeFile]);
+    }, 10);
+  }, [activeFile]);
 
   const _handleKeyDown = (e) => {
     const ctrl = e.ctrlKey;
@@ -75,6 +75,7 @@ function MainBody({ openCode, activeFile, fileStore }) {
   return (
     <>
       <div className="w-full h-full flex flex-col">
+      <Tabs />
         <textarea
           id="editing"
           spellCheck="false"
@@ -83,10 +84,11 @@ function MainBody({ openCode, activeFile, fileStore }) {
           value={openCode ? openCode : text}
           onInput={syncScroll}
           onScroll={syncScroll}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDown} 
+          className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
         ></textarea>
-        <pre ref={higthlightingRef} id="highlighting" aria-hidden="true">
-          <code className="language-javascript" ref={code}>
+        <pre ref={higthlightingRef} id="highlighting" aria-hidden="true" className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin">
+          <code className="language-javascript scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin" ref={code}>
             {openCode ? openCode : text}
           </code>
         </pre>
