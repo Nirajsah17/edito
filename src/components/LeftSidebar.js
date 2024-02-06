@@ -11,8 +11,8 @@ export default function LeftSideBar({ isVisible, directoryStore,fileStore,active
   const { dir, setDirectory } = useContext(FileContext);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeFolder, setActiveFolder] = useState();
-  const [activeFile, setActiveFile] = useState();
+  const [activeFolder, setActiveFolder] = useState({});
+  const [activeFile, setActiveFile] = useState({});
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isFile,setIsFile] = useState(false);
@@ -44,15 +44,16 @@ export default function LeftSideBar({ isVisible, directoryStore,fileStore,active
 
   const handleActiveItem = (e) => {
     const _activeFolder = e.target.dataset.folder;
-    const _activeFile = e.target.dataset.file;
+    const _activeFileId = e.target.dataset.file;
+    const _activeFileName = e.target.dataset.name;
+
 
     if (_activeFolder) {
       setActiveFolder(_activeFolder);
     }
-    if (_activeFile) {
-      setActiveFile(_activeFile);
-      activeFileData(activeFile);
-      
+      if (_activeFileName && _activeFileId) {
+      setActiveFile({id: _activeFileId, name: _activeFileName});
+      activeFileData({id: _activeFileId, name: _activeFileName});
     }
   };
 

@@ -4,7 +4,8 @@ import Prism from "prismjs";
 import "../custom.css";
 import { Tabs } from "./tab";
 
-function MainBody({ openCode, activeFile, fileStore }) {
+function MainBody({ openCode, activeFileObj, fileStore }) {
+
   const [text, setText] = useState("");
   const code = useRef(null);
   const editing = useRef(null);
@@ -29,14 +30,15 @@ function MainBody({ openCode, activeFile, fileStore }) {
   useEffect(() => {
     setTimeout(async () => {
       if (!fileStore) return;
-      const obj = await fileStore.getFile(activeFile);
+      const obj = await fileStore.getFile(activeFileObj.id);
 
       if (obj) {
         setText(obj.content);
+
       }
       // console.log(obj);
     }, 10);
-  }, [activeFile]);
+  }, [activeFileObj]);
 
   const _handleKeyDown = (e) => {
     const ctrl = e.ctrlKey;
@@ -44,7 +46,7 @@ function MainBody({ openCode, activeFile, fileStore }) {
     if (ctrl) {
       if (ctrl && e.which == 83) {
         e.preventDefault();
-        saveFile(activeFile, text);
+        saveFile(activeFileObj.id, text);
       }
     }
   };
@@ -76,7 +78,7 @@ function MainBody({ openCode, activeFile, fileStore }) {
   return (
     <>
       <div className="w-full h-full flex flex-col">
-      <Tabs activeFile={activeFile}/>
+      <Tabs activeFileObj={activeFileObj}/>
         <textarea
           id="editing"
           spellCheck="false"

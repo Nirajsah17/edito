@@ -21,7 +21,7 @@ export default function App() {
   const { users } = useContext(UserContext);
   const [user, setUser] = useState(users);
 
-  const [activeFile, setActiveFile] = useState("");
+  const [activeFile, setActiveFile] = useState({});
 
   const { dir } = useContext(FileContext);
   const [directory, setDirectory] = useState(dir.children);
@@ -31,8 +31,8 @@ export default function App() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
-  const _setActiveFile = (file) => {
-    setActiveFile(file);
+  const _setActiveFile = (fileObj) => {
+    setActiveFile(fileObj);
   };
 
   document.addEventListener("onSignUp", (e) => {
@@ -90,7 +90,7 @@ export default function App() {
                 ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody openCode={""} activeFile={activeFile} fileStore={store.File}></MainBody>
+                <MainBody openCode={""} activeFileObj={activeFile} fileStore={store.File}></MainBody>
               </div>
             </div>
           </div>
