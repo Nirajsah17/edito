@@ -7,7 +7,7 @@ function Tabs({ activeFileObj }) {
   // Check the active file is present in the tbs list if not add them here set to active
   // perform CRUD operation on tabs
   // show the result based on file info
-  const _tabs = ["index.js"];
+  const _tabs = ["edito.txt"];
 
   // const [allTabs,setAllTabs] = useState([]);
   const [tabList, setTabList] = useState(_tabs);
