@@ -1,3 +1,9 @@
+## 07 Feb 2023
+
+* Pyscript for running python code
+* browser eval or iframe can be used to run js code.
+* 
+
 ## 10 Dec 2023
 
 * Tab in the code editing is not working.
