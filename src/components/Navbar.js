@@ -48,7 +48,7 @@ export default function Navbar({
                 onClick={() => {
                   setProfileOpen(true);
                 }}
-                className="flex items-center justify-center rounded-full px-4 border bg-orange-500 text-white cursor-pointer hover:border-1 hover:border-gray-400"
+                className="flex items-center justify-center rounded-full px-3.5 border bg-orange-500 text-white cursor-pointer hover:border-1 hover:border-gray-400"
                 title={userName}
               >
                 {userName.charAt(0)}

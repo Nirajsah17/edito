@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "prismjs/themes/prism.css";
 import Prism from "prismjs";
 import "../custom.css";
-import { Tabs } from "./tab";
+import { Tabs } from "./Tab";
 
 function MainBody({ openCode, activeFileObj, fileStore }) {
 
@@ -17,7 +17,7 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
       higthlightingRef.current.scrollLeft = element.scrollLeft;
     }
   };
-
+  
   const saveFile = (filename, content) => {
     console.log({ filename, content });
     setTimeout(async () => {
@@ -77,8 +77,12 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col">
-      <Tabs activeFileObj={activeFileObj}/>
+  
+      <div className="flex flex-col justify-between h-full w-full">
+        <div>
+        <Tabs activeFileObj={activeFileObj}/>
+      </div>
+      <div className="relative flex flex-1">
         <textarea
           id="editing"
           spellCheck="false"
@@ -96,7 +100,8 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
           </code>
         </pre>
       </div>
-    </>
+      </div>
+      </>
   );
 }
 
