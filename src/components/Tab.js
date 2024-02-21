@@ -59,7 +59,7 @@ return (
   >
     {tabList.map((tab) => (
       <div key={tab.id} data-id={tab.id} data-name={tab.name} className={tab.id === activeFile.id ? "p-1 border-r-2 bg-black cursor-pointer" : "p-1 border-r-2 cursor-pointer"}>
-        <span className="p-0.5">{tab.name}</span>
+        <span className="p-0.5 text-sm">{tab.name}</span>
         <span>
           <button
             key={`${tab.id}-close`}

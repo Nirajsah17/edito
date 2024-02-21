@@ -134,7 +134,7 @@ export default function LeftSideBar({
   const renderNode = (node) => {
     if (node.type === "folder") {
       return (
-        <Folder key={node.name} name={node.name} uuid={node.uuid}>
+        <Folder key={node.name} name={node.name} uuid={node.uuid} activeFolder={activeFolder}>
           {node.children.map(renderNode)}
         </Folder>
       );
