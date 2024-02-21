@@ -4,7 +4,7 @@ import Prism from "prismjs";
 import "../custom.css";
 import { Tabs } from "./Tab";
 
-function MainBody({ openCode, activeFileObj, fileStore }) {
+function MainBody({ openCode, activeFile, setActiveFile, fileStore }) {
 
   const [text, setText] = useState("");
   const code = useRef(null);
@@ -30,7 +30,7 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
   useEffect(() => {
     setTimeout(async () => {
       if (!fileStore) return;
-      const obj = await fileStore.getFile(activeFileObj.id);
+      const obj = await fileStore.getFile(activeFile?.id);
 
       if (obj) {
         setText(obj.content);
@@ -38,7 +38,7 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
       }
       // console.log(obj);
     }, 10);
-  }, [activeFileObj]);
+  }, [activeFile]);
 
   const _handleKeyDown = (e) => {
     const ctrl = e.ctrlKey;
@@ -46,7 +46,7 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
     if (ctrl) {
       if (ctrl && e.which == 83) {
         e.preventDefault();
-        saveFile(activeFileObj.id, text);
+        saveFile(activeFile.id, text);
       }
     }
   };
@@ -80,7 +80,7 @@ function MainBody({ openCode, activeFileObj, fileStore }) {
   
       <div className="flex flex-col justify-between h-full w-full">
         <div>
-        <Tabs activeFileObj={activeFileObj}/>
+        <Tabs activeFile={activeFile} setActiveFile={setActiveFile}/>
       </div>
       <div className="relative flex flex-1">
         <textarea

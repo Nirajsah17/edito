@@ -30,10 +30,11 @@ export default function App() {
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [userName, setUserName] = useState("");
-
-  const _setActiveFile = (fileObj) => {
-    setActiveFile(fileObj);
-  };
+  
+  // const _setActiveFile = (fileObj) => {
+  //   setActiveFile(fileObj);
+  //   console.log(fileObj);
+  // };
 
   document.addEventListener("onSignUp", (e) => {
     // console.log("events",e);
@@ -86,11 +87,12 @@ export default function App() {
                   isVisible={isSidebarVisible}
                   directoryStore={store.Directory}
                   fileStore={store.File}
-                  activeFileData={_setActiveFile}
+                  activeFile={activeFile}
+                  setActiveFile= {setActiveFile}
                 ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody openCode={""} activeFileObj={activeFile} fileStore={store.File}></MainBody>
+                <MainBody openCode={""} activeFile={activeFile} setActiveFile={setActiveFile} fileStore={store.File}></MainBody>
               </div>
             </div>
           </div>

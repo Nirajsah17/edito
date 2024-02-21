@@ -7,12 +7,17 @@ import { useState, useContext } from "react";
 import FileContext from "../lib/FileContext";
 import { uuid } from "../lib/utility";
 
-export default function LeftSideBar({ isVisible, directoryStore,fileStore,activeFileData}) {
+export default function LeftSideBar({
+  isVisible,
+  directoryStore,
+  fileStore,
+  activeFile,setActiveFile
+}) {
   const { dir, setDirectory } = useContext(FileContext);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeFolder, setActiveFolder] = useState({});
-  const [activeFile, setActiveFile] = useState({});
+  // const [activeFile, setActiveFile] = useState({});
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isFile,setIsFile] = useState(false);
@@ -53,7 +58,10 @@ export default function LeftSideBar({ isVisible, directoryStore,fileStore,active
     }
       if (_activeFileName && _activeFileId) {
       setActiveFile({id: _activeFileId, name: _activeFileName});
-      activeFileData({id: _activeFileId, name: _activeFileName});
+      setActiveFile({
+        id: _activeFileId,
+        name: _activeFileName
+      });
     }
   };
 
@@ -131,11 +139,11 @@ export default function LeftSideBar({ isVisible, directoryStore,fileStore,active
         </Folder>
       );
     } else if (node.type === "file") {
-      return <File key={node.name} name={node.name} uuid={node.uuid} />;
+      return <File key={node.name} name={node.name} uuid={node.uuid} activeFile={activeFile}/>;
     }
     return null;
   };
-
+  
   return (
     <div style={{ display: isVisible ? "block" : "none" }}>
       <div
