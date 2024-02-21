@@ -7,7 +7,6 @@ import MainBody from "./components/MainBody";
 import SignUp from "./components/SignUp.js";
 import Login from "./components/Login.js";
 import Footer from "./components/Footer";
-import Profile from "./components/Profile.js";
 
 import UserContext from "./lib/UserContext";
 import FileContext from "./lib/FileContext";
