@@ -30,15 +30,23 @@ export default function App() {
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [userName, setUserName] = useState("");
-  
+
   // const _setActiveFile = (fileObj) => {
   //   setActiveFile(fileObj);
   //   console.log(fileObj);
   // };
 
-  document.addEventListener("onSignUp", (e) => {
-    // console.log("events",e);
-  });
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (event) => {
+      const newColorScheme = event.matches ? "dark" : "light";
+      console.log(newColorScheme);
+      if(newColorScheme == "dark"){
+        document.body.classList.add(newColorScheme);
+      }else{
+        document.body.classList.remove("dark");
+      }
+    });
 
   useEffect(() => {
     // Updation of user context
@@ -50,7 +58,7 @@ export default function App() {
         const _userName = _user.charAt(0).toUpperCase() + _user.slice(1);
         setUserName(_userName);
         const directory = await store.Directory.getUserFolder(_user);
-        setDirectory(directory.children)
+        setDirectory(directory.children);
       }
     }, 10);
     // User Fetch if logged in
@@ -66,7 +74,7 @@ export default function App() {
   return (
     <>
       <FileContext.Provider value={{ dir: directory, setDirectory }}>
-        <div className="flex flex-col justify-between h-screen w-full">
+        <div className="bg-white flex flex-col justify-between h-screen w-full">
           <div className="shadow-md">
             <Navbar
               onToggleSidebar={() => setSidebarVisible(!isSidebarVisible)}
@@ -88,11 +96,16 @@ export default function App() {
                   directoryStore={store.Directory}
                   fileStore={store.File}
                   activeFile={activeFile}
-                  setActiveFile= {setActiveFile}
+                  setActiveFile={setActiveFile}
                 ></LeftSideBar>
               </div>
               <div className="relative h-full w-full">
-                <MainBody openCode={""} activeFile={activeFile} setActiveFile={setActiveFile} fileStore={store.File}></MainBody>
+                <MainBody
+                  openCode={""}
+                  activeFile={activeFile}
+                  setActiveFile={setActiveFile}
+                  fileStore={store.File}
+                ></MainBody>
               </div>
             </div>
           </div>

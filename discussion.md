@@ -1,3 +1,15 @@
+## 21 Feb 2023
+
+* New created file should be always active 
+* Error handling of db(Initially fetch get failed)
+* console for running the code
+* Dark Mode
+<!-- Exploratory -->
+* word auto completion 
+* Key binding like vscode
+* Settings module
+
+
 ## 07 Feb 2023
 
 * Pyscript for running python code

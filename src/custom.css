@@ -88,3 +88,8 @@ textarea:focus {
   line-height: 1.5;
   height: 24px;
 } */
+
+.dark {
+  filter: invert(80%)
+}
+

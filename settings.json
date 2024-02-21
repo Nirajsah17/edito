@@ -1,0 +1,18 @@
+{
+  "settings":{
+    "general_settings": {
+    },
+    "appearence": {
+      "theme": {}
+    },
+    "keyboard_shortcuts": {
+
+    },
+    "editor": {
+      "cursor": {},
+      "tab": {},
+      "search": {},
+      "split_editor": {}
+    }
+  }
+}
