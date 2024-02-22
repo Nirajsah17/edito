@@ -110,7 +110,9 @@ function MainBody({ openCode, activeFile, setActiveFile, fileStore }) {
             </code>
           </pre>
         </div>
-      {is_console_open ? <Console></Console> : ''}
+        <div>
+          {is_console_open ? <Console></Console> : ''}
+        </div>
       </div>
     </>
   );

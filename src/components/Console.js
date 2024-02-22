@@ -11,7 +11,7 @@ export default function Console (){
 
   return (
     <>
-      <div className="flex h-full w-full flex-col border absolute top-80 left-0 bg-white z-20">
+      < div className = "w-full h-full flex flex-col top-0 left-0 z-10">
         <div className="flex">
           <div className="cursor-pointer rounded-sm p-2 hover:bg-gray-300">
             TERMINAL
@@ -25,14 +25,13 @@ export default function Console (){
             <span className="text-green-500">$</span>{" "}
             <span className="text-purple-700">{userName}</span> : 
             <textarea
-              className="w-full resize-none overflow-x-hidden overflow-y-hidden caret-purple-800 focus:outline-none"
+              className = "h-full w-full scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
               type="text"
               wrap="soft"
             ></textarea>
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }
