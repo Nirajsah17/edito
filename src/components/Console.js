@@ -8,30 +8,46 @@ export default function Console (){
     console.log(user);
     setUserName(user)
   },[]);
+  
+  const [history, setHistory] = useState([]);
+  const [input, setInput] = useState('');
 
-  return (
-    <>
-      < div className = "w-full h-full flex flex-col top-0 left-0 z-10">
-        <div className="flex">
-          <div className="cursor-pointer rounded-sm p-2 hover:bg-gray-300">
-            TERMINAL
-          </div>
-          <div className="cursor-pointer rounded-sm p-2 hover:bg-gray-300">
-            DEBUG CONSOLE
-          </div>
+  const handleCommand = () => {
+    if (input.trim() !== '') {
+      setHistory(prevHistory => [...prevHistory, input]);
+      setInput('');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+  
+   return (
+   <div className="terminal-container">
+      <div className="terminal">
+        <div className="history">
+          {history.map((command, index) => (
+            <div key={index} className="command-line">
+              <span className="prompt">C:\WIKIPEDIA &gt; </span>
+              {command}
+            </div>
+          ))}
         </div>
-        <div className="flex flex-1 flex-col border">
-          <div className="flex">
-            <span className="text-green-500">$</span>{" "}
-            <span className="text-purple-700">{userName}</span> : 
-            <textarea
-              className = "h-full w-full scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
-              type="text"
-              wrap="soft"
-            ></textarea>
-          </div>
+        <div className="input-line">
+          <span className="prompt">C:\WIKIPEDIA &gt; </span>
+          <input
+            type="text"
+            className="input"
+            value={input}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleCommand();
+            }}
+          />
+          <button className="caret" onClick={handleCommand}></button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

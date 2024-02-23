@@ -93,3 +93,47 @@ textarea:focus {
   filter: invert(80%)
 }
 
+.terminal-container {
+  bottom: 0;
+  height: 200px; /* Adjust this height as needed */
+  overflow-y: auto;
+  background-color: black;
+}
+
+.terminal {
+  font-family: monospace;
+  color: limegreen;
+  padding: 10px;
+}
+
+.history {
+  margin-bottom: 10px;
+}
+
+.command-line {
+  margin-bottom: 5px;
+}
+
+.prompt {
+  color: yellow;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  color: limegreen;
+  outline: none;
+}
+
+.caret {
+  background-color: limegreen;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
