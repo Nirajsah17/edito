@@ -94,46 +94,57 @@ textarea:focus {
 }
 
 .terminal-container {
-  bottom: 0;
-  height: 200px; /* Adjust this height as needed */
-  overflow-y: auto;
-  background-color: black;
-}
-
-.terminal {
+  background: #000;
+  color: #0F0;
   font-family: monospace;
-  color: limegreen;
-  padding: 10px;
+  height: 300px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  word-break: break-all;
+  margin: 0;
+  padding: 16px;
 }
 
-.history {
+/* #history {
   margin-bottom: 10px;
-}
+} */
 
-.command-line {
-  margin-bottom: 5px;
-}
-
-.prompt {
-  color: yellow;
-}
-
-.input-line {
-  display: flex;
-  align-items: center;
-}
-
-.input {
-  flex-grow: 1;
-  background-color: transparent;
-  border: none;
-  color: limegreen;
+#input {
+  display: inline;
   outline: none;
+  visibility: visible;
 }
 
-.caret {
-  background-color: limegreen;
-  color: black;
-  border: none;
-  cursor: pointer;
+#input::selection {
+  color: #000;
+  background: #0F0;
 }
+
+#input:empty::before {
+  content: ' ';
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+#input:focus + #caret {
+  animation: blink 1s steps(5, start) infinite;
+}
+
+#input.noCaret + #caret {
+  visibility: hidden;
+}
+
+#caret {
+  border: 0;
+  padding: 0;
+  outline: none;
+  background-color: #0F0;
+  display: inline-block;
+  font-family: monospace;
+}
+
