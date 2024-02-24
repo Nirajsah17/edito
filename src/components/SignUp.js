@@ -36,9 +36,9 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
     setUser([...user, _user]);
     userStore.addUser(_user);
     const _directory = {
+      ...defaultDir,
       email: email,
-      uuid: uuid(),
-      ...defaultDir
+      uuid: uuid()
     }
     directoryStore.addRoot(_directory);
     alert(`${email} user has been created` );

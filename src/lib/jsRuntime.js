@@ -9,29 +9,29 @@ class JsRuntime {
         return eval(jsString);
     }
   
-    // init() {
-    //     // Initialize messages array
-    //     this.messages = [];
-    //     this.originalConsole = window.console;
-    //     // Override console methods to capture messages
-    //     let capturedConsole = {
-    //         log: (...args) => this.captureMessage('log', args),
-    //         error: (...args) => this.captureMessage('error', args),
-    //         warn: (...args) => this.captureMessage('warn', args)
-    //     };
+    init() {
+        // Initialize messages array
+        this.messages = [];
+        this.originalConsole = window.console;
+        // Override console methods to capture messages
+        let capturedConsole = {
+            log: (...args) => this.captureMessage('log', args),
+            error: (...args) => this.captureMessage('error', args),
+            warn: (...args) => this.captureMessage('warn', args)
+        };
   
-    //     // Override console methods
-    //     window.console = capturedConsole;
-    // }
+        // Override console methods
+        window.console = capturedConsole;
+    }
   
-    // captureMessage(type, args) {
-    //     // Capture console message along with type and timestamp
-    //     this.messages.push({
-    //         type: type,
-    //         message: args.join(' '),
-    //         timestamp: new Date()
-    //     });
-    // }
+    captureMessage(type, args) {
+        // Capture console message along with type and timestamp
+        this.messages.push({
+            type: type,
+            message: args.join(' '),
+            timestamp: new Date()
+        });
+    }
   
     async run(rawCode) {
         if (!rawCode) return null;

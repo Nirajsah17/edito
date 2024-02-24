@@ -116,7 +116,11 @@ export default function LeftSideBar({
           email: email,
           uuid: fileObj.uuid,
           content: ""
-        })
+        });
+          setActiveFile({
+            id: fileObj.uuid,
+            name: fileObj.name
+          });
       } else {
         let folder = {
           "uuid": uuid(),

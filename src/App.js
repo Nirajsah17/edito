@@ -30,11 +30,6 @@ export default function App() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
-  // const _setActiveFile = (fileObj) => {
-  //   setActiveFile(fileObj);
-  //   console.log(fileObj);
-  // };
-
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
@@ -62,7 +57,29 @@ export default function App() {
     }, 10);
     // User Fetch if logged in
   }, []);
+  
+//   useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       let _res = await store.Users.getUsers();
+//       setUser([...user, ..._res]);
+      
+//       let _user = localStorage.getItem("user");
+//       if (_user) {
+//         const _userName = _user.charAt(0).toUpperCase() + _user.slice(1);
+//         setUserName(_userName);
+//         const directory = await store.Directory.getUserFolder(_user);
+//         setDirectory(directory.children);
+//       }
+//     } catch (error) {
+//       console.warn("Please Create Account :)");
+//     }
+//   };
 
+//   fetchData();
+
+// }, []);
+  
   const onLogin = async (email) => {
     const dir = await store.Directory.getUserFolder(email);
     const _userName = email.charAt(0).toUpperCase() + email.slice(1);

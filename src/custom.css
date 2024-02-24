@@ -94,7 +94,8 @@ textarea:focus {
 }
 
 .terminal-container {
-  background: #000;
+  border: 1px solid gray;
+  background: "#fff";
   color: #0F0;
   font-family: monospace;
   height: 300px;
@@ -117,7 +118,7 @@ textarea:focus {
 }
 
 #input::selection {
-  color: #000;
+  color: #fff;
   background: #0F0;
 }
 
