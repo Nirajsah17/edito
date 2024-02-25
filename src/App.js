@@ -7,7 +7,6 @@ import MainBody from "./components/MainBody";
 import SignUp from "./components/SignUp.js";
 import Login from "./components/Login.js";
 import Footer from "./components/Footer";
-import Console from "./components/Console";
 
 import UserContext from "./lib/UserContext";
 import FileContext from "./lib/FileContext";
@@ -30,7 +29,6 @@ export default function App() {
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [userName, setUserName] = useState("");
-  const [isTerminalOpen, SetTerminalOpen] = useState(false);
 
   window
     .matchMedia("(prefers-color-scheme: dark)")
@@ -43,18 +41,7 @@ export default function App() {
         document.body.classList.remove("dark");
       }
     });
-    const _handleKeyDown = (e) => {
-      const ctrl = e.ctrlKey;
-      if (ctrl) {
-        if (ctrl && e.key === '`') {
-          SetTerminalOpen(!isTerminalOpen)
-        }
-      }
-    };
-
-  document.addEventListener("keydown", _handleKeyDown);
-  
-
+   
   useEffect(() => {
     // Updation of user context
     setTimeout(async () => {
@@ -139,7 +126,6 @@ export default function App() {
                   setActiveFile={setActiveFile}
                   fileStore={store.File}
                 ></MainBody>
-                <Console isTerminalOpen={isTerminalOpen} fileStore={store.File}></Console>
               </div>
             </div>
           </div>

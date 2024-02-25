@@ -3,7 +3,7 @@ import {JsRuntime} from "../lib/jsRuntime.js";
 import FileContext from "../lib/FileContext";
 
 const Console = ({
-    isTerminalOpen, fileStore
+     fileStore
   }) => {
   const historyRef = useRef(null);
   const inputRef = useRef(null);
@@ -110,7 +110,6 @@ const Console = ({
   };
   
   return (
-    <div style={{ display: isTerminalOpen ? "block" : "none" }} className="absolute bottom-0 w-full">
     < div className = "terminal-container scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin" >
        
       <div id="history" ref={historyRef}></div>
@@ -128,7 +127,6 @@ const Console = ({
         onKeyDown={handleKeyDown}
       ></span>
       <button id="caret" onClick={() => inputRef.current.focus()}>&nbsp;</button>
-    </div>
     </div>
   );
 };

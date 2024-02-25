@@ -50,7 +50,10 @@ function MainBody({ openCode, activeFile, setActiveFile, fileStore }) {
         e.preventDefault();
         saveFile(activeFile.id, text);
       }
-     
+      if (ctrl && e.key === '`') {
+        e.preventDefault();
+        set_is_console_open(!is_console_open);
+      }
     }
   };
   
@@ -109,6 +112,9 @@ function MainBody({ openCode, activeFile, setActiveFile, fileStore }) {
               {openCode ? openCode : text}
             </code>
           </pre>
+        </div>
+         <div>
+          {is_console_open ? <Console fileStore={fileStore}></Console> : ''}
         </div>
       </div>
     </>
