@@ -3,7 +3,6 @@
   margin: 0;
   padding: 10px;
   border: 1px solid gray;
-  /* width: calc(100% - 32px); */
   height: 100%;
   width: 100%;
 }
@@ -72,23 +71,6 @@ textarea:focus {
   border-color: transparent;
 }
 
-/* .line-numbers {
-  display: flex !important;
-  flex-direction: column;
-  padding: 10px;
-  border-right: 1px solid #ccc;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  min-height: 100%;
-  overflow: hidden;
-}
-
-.line-numbers div {
-  font-size: 14px;
-  line-height: 1.5;
-  height: 24px;
-} */
-
 .dark {
   filter: invert(80%)
 }
@@ -149,3 +131,10 @@ textarea:focus {
   font-family: monospace;
 }
 
+::-moz-selection {
+  background: hsla(248, 53%, 58%, 0.4);
+}
+
+::selection {
+  background: hsla(0, 3%, 8%, 0.1);
+}

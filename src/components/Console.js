@@ -110,25 +110,31 @@ const Console = ({
   };
   
   return (
-    <div style={{ display: isTerminalOpen ? "block" : "none" }} className="absolute bottom-0 w-full">
-    < div className = "terminal-container scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin" >
-       
-      <div id="history" ref={historyRef}></div>
-     <div className="text-xs">
-         {output && output.map((message, index) => (
-    <pre key={index} className={colorCode[message.split(":")[0]]}>{message.split(":")[1]}</pre>
-  ))}
+    <div
+      style={{ display: isTerminalOpen ? "block" : "none" }}
+      className="absolute bottom-0 w-full"
+      // onClick={() => inputRef.current.focus()}
+    >
+      <div className="terminal-container scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin">
+        <div id="history" ref={historyRef}></div>
+        <div className="text-xs">
+          {output &&
+            output.map((message, index) => (
+              <pre key={index} className={colorCode[message.split(":")[0]]}>
+                {message.split(":")[1]}
+              </pre>
+            ))}
+        </div>
+        <span className="font-bold">$ {useName}: </span>
+        <span
+          id="input"
+          contentEditable="true"
+          ref={inputRef}
+          onInput={handleInputChange}
+          onKeyDown={handleKeyDown}
+        ></span>
+        <button id="caret">&nbsp;</button>
       </div>
-      <span className="font-bold">$ {useName}: </span>
-      <span
-        id="input"
-        contentEditable="true"
-        ref={inputRef}
-        onInput={handleInputChange}
-        onKeyDown={handleKeyDown}
-      ></span>
-      <button id="caret" onClick={() => inputRef.current.focus()}>&nbsp;</button>
-    </div>
     </div>
   );
 };
