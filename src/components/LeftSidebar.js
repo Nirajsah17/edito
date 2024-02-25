@@ -101,6 +101,10 @@ export default function LeftSideBar({
       setInputValue(e.target.value);
       setIsInputVisible(false);
       let email = localStorage.getItem("user");
+      if(!email){
+        alert("Please create accound!!");
+        return;
+      }
       if (isFile) {
         let fileObj = {
           uuid: uuid(),
@@ -192,8 +196,9 @@ export default function LeftSideBar({
       )}
       {isInputVisible && (
         <input
+          className = "focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
           type="text"
-          placeholder="Enter folder name"
+          placeholder="create file/folder"
           onKeyDown={handleInputKeyDown}
         />
       )}

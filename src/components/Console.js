@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState, useContext } from 'react';
 import {JsRuntime} from "../lib/jsRuntime.js";
 import FileContext from "../lib/FileContext";
 
-const Console = ({fileStore}) => {
+const Console = ({
+    isTerminalOpen, fileStore
+  }) => {
   const historyRef = useRef(null);
   const inputRef = useRef(null);
   const [useName, setUserName] = useState("");
@@ -20,8 +22,11 @@ const Console = ({fileStore}) => {
   useEffect(() => {
     inputRef.current.focus();
      let _useName = localStorage.getItem("user");
-     _useName = _useName.split("@")[0];
-     setUserName(_useName);
+     if(_useName){
+      _useName = _useName.split("@")[0];
+      setUserName(_useName);
+     }
+    
   }, []);
   
   function findUuidByName(data, name) {
@@ -105,6 +110,7 @@ const Console = ({fileStore}) => {
   };
   
   return (
+    <div style={{ display: isTerminalOpen ? "block" : "none" }} className="absolute bottom-0 w-full">
     < div className = "terminal-container scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin" >
        
       <div id="history" ref={historyRef}></div>
@@ -122,6 +128,7 @@ const Console = ({fileStore}) => {
         onKeyDown={handleKeyDown}
       ></span>
       <button id="caret" onClick={() => inputRef.current.focus()}>&nbsp;</button>
+    </div>
     </div>
   );
 };
