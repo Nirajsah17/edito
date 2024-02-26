@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import {JsRuntime} from "../lib/jsRuntime.js";
 import FileContext from "../lib/FileContext";
+import { initializeGenerativeAI } from '../genAI.js';
+
+let GenAI = null;
 
 const Console = ({
      fileStore
@@ -9,6 +12,8 @@ const Console = ({
   const inputRef = useRef(null);
   const [useName, setUserName] = useState("");
   const [output, setOutput] = useState([]);
+  let API_KEY = "";
+  let modelName = "gemini-pro";
   const colorCode = {
     "Warning": "text-orange-400",
     "Error": "text-red-400",
@@ -18,16 +23,34 @@ const Console = ({
   const { dir, setDirectory } = useContext(FileContext);
   
   const jsrun = new JsRuntime();
+
+  let runAI = async (prompt)=>{
+    const result = await GenAI.generateContent(prompt);
+    const response = await result.response;
+    const text = await response.text();
+    return text;
+  }
+
   
   useEffect(() => {
-    inputRef.current.focus();
-     let _useName = localStorage.getItem("user");
-     if(_useName){
-      _useName = _useName.split("@")[0];
-      setUserName(_useName);
-     }
-    
+    const fetchData = async () => {
+      inputRef.current.focus();
+      let _useName = localStorage.getItem("user");
+      if (_useName) {
+        _useName = _useName.split("@")[0];
+        setUserName(_useName);
+      }
+      try {
+        GenAI = await initializeGenerativeAI(API_KEY, modelName);
+        // Do something with GenAI if needed
+      } catch (error) {
+        console.error("Error initializing Generative AI:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
   
   function findUuidByName(data, name) {
     for (let item of data) {
@@ -84,7 +107,7 @@ const Console = ({
     }
   };
   
-  const handleCommand = (command) => {
+  const handleCommand = async (command) => {
      output.map((message, index) => {
        const log = document.createElement('div');
        log.setAttribute("className", `text-xs ${colorCode[message.split(":")[0]]}`);
@@ -95,9 +118,13 @@ const Console = ({
     const line = document.createElement('div');
     line.textContent = `$ ${useName}: ${command}`;
     historyRef.current.appendChild(line);
-    
-    console.log(command);
-    handleFileExuction(command);
+    const cmd = command.split(":")[0];
+    if(cmd == "editoAI"){
+      let res = await runAI(cmd[1]);
+      console.log(res);
+    }else{
+      handleFileExuction(command);
+    }
   };
   
   const handleKeyDown = (e) => {
