@@ -1,0 +1,14 @@
+[
+  {
+    "name": "home",
+    "type": "folder",
+    "children": [
+      {
+        "name": "edito.txt",
+        "type": "file",
+        "size": "2 MB",
+        "created_at": "time"
+      }
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "uuid": "asa13513-wiqgds",
+  "name": "Root",
+  "type": "folder",
+  "children": [{
+    "uuid": "asa13513-wiqgds-1631",
+    "name": "Home",
+    "type": "folder",
+    "children": []
+  }
+  ]
+}

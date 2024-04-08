@@ -1,14 +1,30 @@
 {
-  "name": "iamge-editor",
+  "name": "edito",
   "version": "0.1.0",
+  "description": "edito code editor",
   "private": true,
+  "author": "Niraj Kumar <nirajnsp5@gmail.com>",
+  "contributors": [
+    "pallawi Kumari"
+  ],
+  "keywords": [],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Nirajsah17/edito.git"
+  },
+  "readmeFilename": "README.md",
+  "homepage": "",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@google/generative-ai": "^0.2.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "i": "^0.3.7",
     "idb": "^7.1.1",
-    "konva": "^9.2.3",
+    "npm": "^10.2.5",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -38,7 +54,7 @@
       "last 1 safari version"
     ]
   },
-  "node": {
-    "version": ">@v18.16.0"
+  "devDependencies": {
+    "tailwind-scrollbar": "^3.0.5"
   }
 }
