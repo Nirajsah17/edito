@@ -29,7 +29,7 @@ export default function Navbar({
     <>
       <div className="flex flex-row justify-between w-full h-12">
         <div className="flex flex-row justify-center">
-          <div className="flex justify-center px-2 m-2 hover:bg-slate-200 cursor-pointer rounded">
+          <div className="flex justify-center px-2 m-2 cursor-pointer rounded">
             <button onClick={onToggleSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

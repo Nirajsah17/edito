@@ -94,7 +94,7 @@ export default function App() {
   return (
     <>
       <FileContext.Provider value={{ dir: directory, setDirectory }}>
-        <div className="bg-white flex flex-col justify-between h-screen w-full">
+        <div className="bg-bg-default flex flex-col justify-between h-screen w-full">
           <div className="shadow-md">
             <Navbar
               onToggleSidebar={() => setSidebarVisible(!isSidebarVisible)}
