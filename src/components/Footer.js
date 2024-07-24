@@ -3,7 +3,7 @@ import UserContext from "../lib/UserContext.js";
 
 function Footer() {
   return (
- <div className="flex flex-row text-gray-600 justify-center items-center bg-purple-300 shadow-md">
+ <div className="flex flex-row justify-center items-center shadow-md">
    Edito @copyright
  </div>
   );
