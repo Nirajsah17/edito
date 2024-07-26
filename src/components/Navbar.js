@@ -22,14 +22,14 @@ export default function Navbar({
   };
 
   const handleMode = (e) => {
-    document.body.classList.toggle("dark")
+    document.body.classList.toggle("dark-theme")
   };
 
   return (
     <>
-      <div className="flex flex-row justify-between w-full h-12">
+      <div className="flex flex-row justify-between w-full h-12 text-fg-default">
         <div className="flex flex-row justify-center">
-          <div className="flex justify-center px-2 m-2 hover:bg-slate-200 cursor-pointer rounded">
+          <div className="flex justify-center px-2 m-2 cursor-pointer rounded">
             <button onClick={onToggleSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export default function Navbar({
         <div className="flex flex-row">
           <label className="inline-flex items-center me-5 cursor-pointer">
             <input type="checkbox" onChange={handleMode} value="" className="sr-only peer"></input>
-            <div className="relative w-11 h-6 rounded-full peer dark:bg-gray-200 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-900"></div>
+            <div className="relative w-11 h-6 rounded-full peer dark:bg-gray-200 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full  after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-900"></div>
           </label>
           {userName ? (
             <div className="m-1 flex flex-row justify-center relative">
@@ -67,7 +67,7 @@ export default function Navbar({
               <div className="px-0.5 flex flex-row justify-center">
                 <button
                   onClick={onOpenSignup}
-                  className="m-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-3 border border-purple-500 hover:border-transparent rounded"
+                  className="m-2 bg-transparent hover:bg-bg-accentEmphasis font-semibold hover:text-white py-1 px-3 border  hover:border-transparent rounded"
                 >
                   SignUp
                 </button>
@@ -75,7 +75,7 @@ export default function Navbar({
               <div className="px-1 flex flex-row justify-center">
                 <button
                   onClick={onOpenLogin}
-                  className="m-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-3 border border-purple-500 hover:border-transparent rounded"
+                  className="m-2 bg-transparent hover:bg-bg-accentEmphasis font-semibold hover:text-white py-1 px-3 border  hover:border-transparent rounded"
                 >
                   Login
                 </button>

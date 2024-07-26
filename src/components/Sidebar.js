@@ -15,17 +15,17 @@ export default function SideBar() {
   return (
     <div
       onClick={handleMenu}
-      className="flex flex-col bg-gray-50 w-60 h-full border-r items-center"
+      className="flex flex-col w-60 h-full border-r items-center text-fg-default"
     >
-      <div className="flex w-full bg-gray-100 h-9 border-b justify-between items-center">
-        <div className="p-2 truncate text-gray-500">
+      <div className="flex w-full h-9 border-b justify-between items-center">
+        <div className="p-2 truncate ">
           <b>Home</b>
         </div>
         <div className="flex">
           <div className="p-2">
             <img
               onClick={onFolderCreate}
-              className="cursor-pointer hover:bg-gray-300 hover:rounded-md"
+              className="cursor-pointer hover:rounded-md"
               src={folder}
               height={24}
               width={24}
@@ -34,7 +34,7 @@ export default function SideBar() {
           <div className="p-2">
             <img
               onClick={onFileCreate}
-              className="cursor-pointer hover:bg-gray-300 hover:rounded-md"
+              className="cursor-pointer  hover:rounded-md"
               src={file}
               height={24}
               width={24}

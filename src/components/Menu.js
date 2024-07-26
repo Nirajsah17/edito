@@ -30,14 +30,14 @@ function Menu({ position, onMenuItemClick }) {
   
   return (
     <>
-      <div className="m-2 bg-gray-50 shadow-md flex w-48 cursor-pointer flex-col border-l border-r border-t text-gray-500 absolute z-20"
+      <div className="m-2 shadow-md flex w-48 cursor-pointer flex-col border-l border-r border-t text-fg-default absolute z-20"
       style={{ top: position.y, left: position.x }} onClick={onMenuItemClick}>
-        <div id="newFile" className="border-b p-1 hover:bg-gray-100" >New File</div>
-        <div id="newFolder" className="border-b p-1 hover:bg-gray-100" >New Folder</div>
-        <div id="cut" className="border-b p-1 hover:bg-gray-100" >Cut</div>
-        <div id="copy" className="border-b p-1 hover:bg-gray-100" >Copy</div>
-        <div id="rename" className="border-b p-1 hover:bg-gray-100" >Rename</div>
-        <div id="delete" className="border-b p-1 hover:bg-gray-100" >Delete</div>
+        <div id="newFile" className="border-b p-1 hover:bg-bg-overlay" >New File</div>
+        <div id="newFolder" className="border-b p-1 hover:bg-bg-overlay" >New Folder</div>
+        <div id="cut" className="border-b p-1 hover:bg-bg-overlay" >Cut</div>
+        <div id="copy" className="border-b p-1 hover:bg-bg-overlay" >Copy</div>
+        <div id="rename" className="border-b p-1 hover:bg-bg-overlay" >Rename</div>
+        <div id="delete" className="border-b p-1 hover:bg-bg-overlay" >Delete</div>
       </div>
     
     </>

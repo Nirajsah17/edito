@@ -51,14 +51,14 @@ const handleEventDelegation = (e) => {
 
 return (
   <div
-    className = "w-full flex top-0 left-0 z-10 overflow-x-auto whitespace-no-wrap scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin text-gray-500"
+    className = "w-full flex top-0 left-0 z-10 overflow-x-auto whitespace-no-wrap scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin text-fg-default"
     key={"tabs"}
     onClick = {
       handleEventDelegation
     }
   >
     {tabList.map((tab) => (
-      <div key={tab.id} data-id={tab.id} data-name={tab.name} className={tab.id === activeFile.id ? "p-1 border-r-2 bg-black cursor-pointer" : "p-1 border-r-2 cursor-pointer"}>
+      <div key={tab.id} data-id={tab.id} data-name={tab.name} className={tab.id === activeFile.id ? "p-1 border-r-2 cursor-pointer" : "p-1 border-r-2 cursor-pointer"}>
         <span className="p-0.5 text-sm">{tab.name}</span>
         <span>
           <button
@@ -66,7 +66,7 @@ return (
             data-name={tab.name}
             data-id={tab.id}
             type="button"
-            className="tab-delete-button end-2.5 ms-auto inline-flex h-5 w-5 items-center justify-center rounded bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+            className="tab-delete-button end-2.5 ms-auto inline-flex h-5 w-5 items-center justify-center rounded text-sm bg-bg-default hover:bg-bg-overlay"
             data-modal-hide="authentication-modal"
           >
             <svg className="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg><span className="sr-only">Close modal</span>

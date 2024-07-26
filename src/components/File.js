@@ -1,6 +1,6 @@
 const File = ({ name , uuid, activeFile}) => (
-  <div className={uuid === activeFile?.id ? " px-0.5 my-1 border border-slate-400 cursor-pointer bg-slate-200": "px-0.5 my-1 cursor-pointer hover:bg-slate-200"} data-file={uuid} data-name={name}>
-    <span className="text-sm" data-file={uuid} data-name={name}>{name}</span>
+  <div className={uuid === activeFile?.id ? "p-1 my-1 border border-b cursor-pointer bg-bg-overlay hover:bg-bg-overlay": "p-1 my-1 cursor-pointer hover:bg-bg-overlay"} data-file={uuid} data-name={name} title={name}>
+    <span className="text-sm" data-file={uuid} data-name={name} title={name}>{name}</span>
   </div>
 );
 

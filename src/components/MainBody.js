@@ -97,13 +97,13 @@ function MainBody({ openCode, activeFile, setActiveFile, fileStore }) {
             onInput={syncScroll}
             onScroll={syncScroll}
             onKeyDown={handleKeyDown}
-            className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
+            className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin bg-bg-accentEmphasis"
           ></textarea>
           <pre
             ref={higthlightingRef}
             id="highlighting"
             aria-hidden="true"
-            className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
+            className="scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin bg-bg-accentEmphasis"
           >
             <code
               className="language-javascript scrollbar-thumb-gray-200 scrollbar-track-gray-100 scrollbar-thumb-rounded-md scrollbar-thin"
