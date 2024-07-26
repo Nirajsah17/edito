@@ -138,6 +138,9 @@ module.exports = {
           sponsors: "var(--border-sponsors)",
           sponsorsEmphasis: "var(--border-sponsors-emphasis)",
         },
+        caret:{
+          default: "var(--caret-default)",
+        }
       },
     },
   },

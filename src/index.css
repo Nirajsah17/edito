@@ -19,7 +19,7 @@
     --fg-emphasis: #212121;
 
     --bg-default: #f6f6f6;
-    --bg-overlay: #2121210d;
+    --bg-overlay: #1111110d;
     --bg-inset: #f6f8fa;
     --bg-subtle: #f6f8fa;
     --bg-emphasis: #D0D7DE;
@@ -107,6 +107,7 @@
     --tp-label-foreground-color: var(--fg-default);
     --tp-monitor-background-color: var(--bg-default);
     --tp-monitor-foreground-color: var(--fg-default);
+    --caret-default: black;
 
     .slider {
       -webkit-appearance: none;
@@ -253,6 +254,7 @@
     --tp-label-foreground-color: var(--fg-default);
     --tp-monitor-background-color: var(--bg-default);
     --tp-monitor-foreground-color: var(--fg-default);
+    --caret-default: black;
   }
 
   .dark-theme {
@@ -359,6 +361,7 @@
     --tp-label-foreground-color: var(--fg-default);
     --tp-monitor-background-color: var(--bg-default);
     --tp-monitor-foreground-color: var(--fg-default);
+    --caret-default: white;
   }
 }
 

@@ -2,7 +2,8 @@
 #highlighting {
   margin: 0;
   padding: 10px;
-  border: 1px solid gray;
+  border: var(--border-default);
+  background-color: var(--canvas-default);
   height: 100%;
   width: 100%;
 }
@@ -37,21 +38,21 @@
 #editing {
   color: transparent;
   background: transparent;
-  caret-color: black;
+  caret-color: var(--caret-default);
 }
 
 /* customization */
 
 pre[class*="language-"] {
-  background-color: white;
+  background-color: var(--bg-default);
 }
 
 .line-numbers {
-  background-color: #e0e0e0;
+  background-color: var(--bg-default);
 }
 
 .line-highlight {
-  background-color: #d0d0d0;
+  background-color: var(--bg-default);
 }
 
 /* scrolling */
@@ -78,7 +79,7 @@ textarea:focus {
 .terminal-container {
   border: 1px solid gray;
   background: "#fff";
-  color: #0F0;
+  color: var(--canvas-default);
   font-family: monospace;
   height: 200px;
   box-sizing: border-box;
@@ -100,7 +101,7 @@ textarea:focus {
 }
 
 #input::selection {
-  color: #fff;
+  color: var(--bg-default);
   background: #0F0;
 }
 
@@ -132,9 +133,9 @@ textarea:focus {
 }
 
 ::-moz-selection {
-  background: hsla(248, 53%, 58%, 0.4);
+  background: hsla(194, 31%, 7%, 0.1);
 }
 
 ::selection {
-  background: hsla(0, 3%, 8%, 0.1);
+  background: hsla(194, 31%, 7%, 0.1);
 }

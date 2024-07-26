@@ -86,7 +86,7 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium"
+                    className="mb-2 block text-sm font-medium text-fg-default"
                   >
                     Email
                   </label>
@@ -94,7 +94,7 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                     type="email"
                     name="email"
                     id="email"
-                    className="block w-full rounded-lg border-border-default  p-2.5 text-sm"
+                    className="block w-full rounded-lg border p-2.5 text-sm bg-bg-default text-fg-default"
                     placeholder="name@domain.com"
                     value={email}
                     onChange={handleEmailChange}
@@ -104,7 +104,7 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                 <div>
                   <label
                     htmlFor="password"
-                    className="mb-2 block text-sm font-medium"
+                    className="mb-2 block text-sm font-medium text-fg-default"
                   >
                     Password{" "}
                   </label>
@@ -113,7 +113,7 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="block w-full rounded-lg border   p-2.5 text-sm"
+                    className="block w-full rounded-lg border bg-bg-default p-2.5 text-sm text-fg-default bg-bg"
                     value={password}
                     onChange={handlePasswordChange}
                     required
@@ -122,7 +122,7 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                 <div>
                   <label
                     htmlFor="password"
-                    className="mb-2 block text-sm font-medium"
+                    className="mb-2 block text-sm font-medium text-fg-default"
                   >
                     Confirm Password
                   </label>
@@ -131,17 +131,17 @@ function SignUp({ onCloseSignup, onSubmit, userStore, directoryStore }) {
                     name="confirmPassword"
                     id="confirmPassword"
                     placeholder="••••••••"
-                    className="block w-full rounded-lg border   p-2.5 text-sm"
+                    className="block w-full rounded-lg border bg-bg-default p-2.5 text-sm text-fg-default"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     required
                   />
                 </div>
-                <div className="flex justify-between"></div>
-                <button className="w-full rounded-lg  px-5 py-2.5 text-center text-sm font-medium bg-bg-doneEmphasis hover:bg-bg-accentEmphasis">
+                <div className="flex justify-between "></div>
+                <button className="w-full rounded-lg  px-5 py-2.5 text-center text-sm font-medium bg-bg-doneEmphasis hover:bg-bg-accentEmphasis text-fg-default">
                   Create an account
                 </button>
-                <div className="text-sm font-medium">
+                <div className="text-sm font-medium text-fg-default">
                   {" "}
                   Already have account?{" "}
                   <a

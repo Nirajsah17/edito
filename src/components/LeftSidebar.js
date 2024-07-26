@@ -156,10 +156,10 @@ export default function LeftSideBar({
     <div style={{ display: isVisible ? "block" : "none" }}>
       <div
         onClick={handleMenu}
-        className="flex flex-col bg-gray-50 w-60 h-full border-r items-center"
+        className="flex flex-col bg-bg-default w-60 h-full border-r items-center text-fg-default"
       >
-        <div className="flex w-full bg-gray-100 h-9 border-b justify-between items-center">
-          <div className="p-2 truncate text-gray-500">
+        <div className="flex w-full h-9 border-b justify-between items-center">
+          <div className="p-2 truncate">
             <b>Home</b>
           </div>
           <div className="flex">
@@ -196,9 +196,10 @@ export default function LeftSideBar({
       )}
       {isInputVisible && (
         <input
-          className = "focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
+          className="bg-bg-default border text-fg-default w-52 mx-2"
           type="text"
-          placeholder="create file/folder"
+          placeholder="Create File/Folder"
+          title="Enter file or folder name and press ENTER"
           onKeyDown={handleInputKeyDown}
         />
       )}
